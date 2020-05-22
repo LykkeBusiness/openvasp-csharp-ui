@@ -1,0 +1,48 @@
+.btn {
+  &.btn-clean {
+    &[disabled] {
+      &:hover {
+        background: transparent;
+        color: #93a2dd;
+
+        > i {
+          color: #93a2dd;
+        }
+      }
+    }
+  }
+
+  &.btn-link {
+    &:active,
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+
+    &:focus {
+      background-color: inherit;
+      color: $kt-brand-color;
+    }
+
+    &:hover {
+      background-color: #fff;
+      border-color: $kt-brand-color;
+      color: $kt-brand-color;
+    }
+
+    &:active {
+      background-color: $kt-brand-color;
+      color: #fff;
+    }
+  }
+
+  &.btn--row-action {
+    color: $kt-brand-color;
+  }
+}
+
+button.btn[disabled],
+input.btn[disabled],
+label.btn[disabled] {
+  cursor: default;
+}

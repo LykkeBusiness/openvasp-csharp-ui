@@ -1,0 +1,22 @@
+<h1 *ngIf="data.Header"
+    mat-dialog-title>{{data.Header}}</h1>
+<div mat-dialog-content>
+  {{data.Message}}
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-outline-primary btn-bold"
+          (click)="cancel()">
+    <span *ngIf="data.ButtonCancelText">{{data.ButtonCancelText}}</span>
+    <span *ngIf="!data.ButtonCancelText"
+          class="text-uppercase"
+          i18n>Cancel</span>
+  </button>
+  <button class="btn btn-primary btn-bold"
+          [mat-dialog-close]="true"
+          cdkFocusInitial>
+    <span *ngIf="data.ButtonConfirmText">{{data.ButtonConfirmText}}</span>
+    <span *ngIf="!data.ButtonConfirmText"
+          class="text-uppercase"
+          i18n>Confirm</span>
+  </button>
+</div>

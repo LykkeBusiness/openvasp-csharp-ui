@@ -1,0 +1,8 @@
+version: '2.3'
+
+services:
+  frontend:
+    hostname: localhost
+    build: .
+    ports:
+      - 80:80

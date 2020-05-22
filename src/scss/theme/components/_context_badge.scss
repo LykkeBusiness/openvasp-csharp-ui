@@ -1,0 +1,37 @@
+@import '~src/scss/theme/utils/variables';
+
+.context-badge {
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  padding: 6px 12px;
+  display: inline-block;
+
+  &.gray,
+  &.draft {
+    background: $dark-grey;
+  }
+
+  &.light-green,
+  &.published,
+  &.active {
+    background: $green;
+    color: #fff;
+  }
+
+  &.pink,
+  &.inactive {
+    background: $pink;
+  }
+
+  &.yellow,
+  &.pending {
+    background: $yellow;
+  }
+
+  &.purple,
+  &.complete {
+    background: $purple;
+  }
+}

@@ -1,0 +1,53 @@
+@import 'rtl-utils-mixins';
+
+@mixin padding-start($padding, $encapsulation: false) {
+  @include property-horizontal-bdir(padding, $padding, $encapsulation);
+}
+
+@mixin padding-end($padding, $encapsulation: false) {
+  @include property-horizontal-bdir(padding, $padding, $encapsulation, false);
+}
+
+@mixin margin-start($margin, $encapsulation: false) {
+  @include property-horizontal-bdir(margin, $margin, $encapsulation);
+}
+
+@mixin margin-end($margin, $encapsulation: false) {
+  @include property-horizontal-bdir(margin, $margin, $encapsulation, false);
+}
+
+@mixin text-align-start($encapsulation: false, $important: false) {
+  @include value-bdir(text-align, true, $encapsulation, $important);
+}
+
+@mixin text-align-end($encapsulation: false, $important: false) {
+  @include value-bdir(text-align, false, $encapsulation, $important);
+}
+
+@mixin float($start: true, $encapsulation: false) {
+  @include value-bdir(float, $start, $encapsulation);
+}
+
+@mixin dir($start: true, $encapsulation: false) {
+  @include value-bdir(dir, $start, $encapsulation);
+}
+
+@mixin start($value, $encapsulation: false) {
+  @include position-bdir($value, true, $encapsulation);
+}
+
+@mixin end($value, $encapsulation: false) {
+  @include position-bdir($value, false, $encapsulation);
+}
+
+@mixin transformTranslate($x, $y: 0, $encapsulation: false) {
+  @include transform-bdir(translate, $x, $y, $encapsulation);
+}
+
+@mixin transformScale($x, $y: 1, $encapsulation: false) {
+  @include transform-bdir(scale, $x, $y, $encapsulation);
+}
+
+@mixin mirror($encapsulation: false) {
+  @include transform-bdir(scale, 1, 1, $encapsulation);
+}

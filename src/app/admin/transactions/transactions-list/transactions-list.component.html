@@ -1,0 +1,185 @@
+<ng-template #subHeaderTemplate>
+  <div class="kt-subheader kt-grid__item"
+       id="kt_subheader">
+    <div class="kt-container kt-container--fluid">
+      <div class="kt-subheader__main">
+        <div class="kt-subheader__toolbar"
+             id="kt_subheader_search">
+          <span class="kt-subheader__desc"
+                id="kt_subheader_total"
+                i18n>Lists of transactions in OpenVASP</span>
+        </div>
+      </div>
+
+      <div class="kt-subheader__toolbar">
+        <button id="btn_add_partner"
+                class="btn btn-brand btn-bold"
+                routerLink="create">
+          <span i18n>Create Transaction</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+  <div class="kt-portlet">
+    <div class="kt-portlet__head kt-portlet__head--lg">
+      <div class="kt-portlet__head-label">
+        <h3 i18n>Outgoing Transactions</h3>
+      </div>
+      <div class="kt-portlet__head-label">
+        <div class="spinner-container"
+             *ngIf="isLoadingOutgoing || isSearchingOutgoing">
+          <div class="spinner-border"></div>
+        </div>
+        <span class="kt-portlet__head-title"
+              [hidden]="isLoadingOutgoing || isSearchingOutgoing"
+              i18n>{{outgoingTransactions.length}} total</span>
+      </div>
+    </div>
+    <div class="kt-portlet__body">
+
+      <div class="spinner-wrapper">
+        <div class="spinner-container spinner-container--top"
+             *ngIf="isSearchingOutgoing">
+          <div class="spinner-border"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="table-wrapper">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th i18n>Transaction Id</th>
+                <th i18n>Date/time</th>
+                <th i18n>Status</th>
+                <th i18n>Originator name</th>
+                <th i18n>Beneficiary name</th>
+                <th i18n>Counterparty name</th>
+                <th i18n>Amount</th>
+                <th i18n>Asset</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of outgoingTransactions; let i = index"
+                  class="data-row-{{i}}">
+                <td>{{row.Id}}</td>
+                <td>{{row.CreationDateTime}}</td>
+                <td>{{row.Status}}</td>
+                <td>{{row.OriginatorFullName}}</td>
+                <td>{{row.BeneficiaryFullName}}</td>
+                <td>{{row.CounterPartyVaspName}}</td>
+                <td>{{row.Amount}}</td>
+                <td>{{row.Asset}}</td>
+                <td>
+                  <a [routerLink]="['view-transaction', row.Id]"
+                     matTooltip="View"
+                     i18n-matTooltip
+                     class="btn btn-sm btn-clean btn-icon btn--row-action">
+                    <mat-icon class="material-icons">visibility</mat-icon>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="spinner-wrapper">
+          <div class="spinner-container spinner-container"
+               *ngIf="isLoadingOutgoing">
+            <div class="spinner-border"></div>
+          </div>
+        </div>
+
+        <div class="table-states-container text-center">
+          <ng-container *ngIf="!isLoadingOutgoing && !isSearchingOutgoing && outgoingTransactions.length === 0">
+            <span i18n>There are no transactions, please create one</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kt-portlet">
+    <div class="kt-portlet__head kt-portlet__head--lg">
+      <div class="kt-portlet__head-label">
+        <h3 i18n>Incoming Transactions</h3>
+      </div>
+      <div class="kt-portlet__head-label">
+        <div class="spinner-container"
+             *ngIf="isLoadingIncoming || isSearchingIncoming">
+          <div class="spinner-border"></div>
+        </div>
+        <span class="kt-portlet__head-title"
+              [hidden]="isLoadingIncoming || isSearchingIncoming"
+              i18n>{{incomingTransactions.length}} total</span>
+      </div>
+    </div>
+    <div class="kt-portlet__body">
+
+      <div class="spinner-wrapper">
+        <div class="spinner-container spinner-container--top"
+             *ngIf="isSearchingIncoming">
+          <div class="spinner-border"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="table-wrapper">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th i18n>Transaction Id</th>
+                <th i18n>Date/time</th>
+                <th i18n>Status</th>
+                <th i18n>Originator name</th>
+                <th i18n>Beneficiary name</th>
+                <th i18n>Counterparty name</th>
+                <th i18n>Amount</th>
+                <th i18n>Asset</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of incomingTransactions; let i = index"
+                  class="data-row-{{i}}">
+                <td>{{row.Id}}</td>
+                <td>{{row.CreationDateTime}}</td>
+                <td>{{row.Status}}</td>
+                <td>{{row.OriginatorFullName}}</td>
+                <td>{{row.BeneficiaryFullName}}</td>
+                <td>{{row.CounterPartyVaspName}}</td>
+                <td>{{row.Amount}}</td>
+                <td>{{row.Asset}}</td>
+                <td>
+                  <a [routerLink]="['view-transaction', row.Id]"
+                     matTooltip="View"
+                     i18n-matTooltip
+                     class="btn btn-sm btn-clean btn-icon btn--row-action">
+                    <mat-icon class="material-icons">visibility</mat-icon>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="spinner-wrapper">
+          <div class="spinner-container spinner-container"
+               *ngIf="isLoadingIncoming">
+            <div class="spinner-border"></div>
+          </div>
+        </div>
+
+        <div class="table-states-container text-center">
+          <ng-container *ngIf="!isLoadingIncoming && !isSearchingIncoming && incomingTransactions.length === 0">
+            <span i18n>There are no transactions</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

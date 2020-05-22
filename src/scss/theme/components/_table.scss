@@ -1,0 +1,65 @@
+@import '../utils/variables';
+
+.mat-table tr:hover {
+  background-color: $hover-table-row-effect;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.table-wrapper {
+  margin-bottom: 1rem;
+  overflow-y: auto;
+
+  table {
+    margin-bottom: 0;
+    table-layout: auto;
+  }
+}
+
+th,
+td {
+  overflow: hidden;
+  width: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table {
+  thead {
+    th {
+      color: $kt-brand-color;
+      font-weight: 600;
+      vertical-align: top;
+    }
+  }
+
+  tbody {
+    td {
+      color: $dark-grey-blue;
+      vertical-align: middle;
+    }
+
+    tr.text-gray {
+      td {
+        color: $dark-grey;
+      }
+    }
+  }
+
+  &-hover tbody tr:hover {
+    background-color: #eff1f1;
+  }
+}
+
+.column-filter-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  // transition: max-height 0.8s ease-in-out;
+
+  &.filter-visible {
+    max-height: 500px;
+  }
+}

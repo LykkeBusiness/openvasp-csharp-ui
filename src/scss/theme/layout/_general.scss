@@ -1,0 +1,64 @@
+@import '../utils/variables';
+@import '../utils/rtl-mixins';
+
+body {
+  color: #393b49;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.width-50 {
+  width: 50%;
+}
+.width-25 {
+  width: 25%;
+}
+.width-33 {
+  width: 33.3333333%;
+}
+.width-75 {
+  width: 75%;
+}
+
+.float-left {
+  @include float(true);
+}
+
+.float-right {
+  @include float(false);
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.margin-0-auto {
+  margin: 0 auto;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

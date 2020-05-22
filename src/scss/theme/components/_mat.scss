@@ -1,0 +1,53 @@
+@import '../utils/variables';
+
+.mat-card {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.mat-form-field {
+  font-size: 1rem;
+}
+
+.mat-dialog-container {
+  min-width: 500px;
+}
+
+.cdk-overlay-container {
+  .mat-select-panel {
+    max-width: 350px;
+  }
+}
+
+.mat-checkbox {
+  > label {
+    margin: 0;
+  }
+}
+
+.column-filter-wrapper {
+  .mat-form-field-appearance-outline {
+    .mat-form-field-wrapper {
+      margin: 0;
+      padding-bottom: 0;
+
+      .mat-form-field-infix {
+        border-top: 0.3em solid transparent;
+      }
+
+      .mat-form-field-suffix {
+        display: flex;
+        top: 0.45em;
+      }
+
+      .mat-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
+
+    &.mat-form-field-type-mat-select {
+      .mat-select-arrow-wrapper {
+        transform: translateY(0);
+      }
+    }
+  }
+}

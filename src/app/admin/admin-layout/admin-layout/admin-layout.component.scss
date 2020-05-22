@@ -1,0 +1,124 @@
+@import '~src/scss/theme/utils/variables';
+
+$badge-size: 38px;
+$badge-size-profile: 50px;
+
+.badge-user-initials {
+  border-radius: 50%;
+  font-size: 16px;
+  height: $badge-size;
+  line-height: $badge-size;
+  padding: 0;
+  top: 0;
+  width: $badge-size;
+
+  &--profile {
+    font-size: 22px;
+    height: $badge-size-profile;
+    line-height: $badge-size-profile;
+    width: $badge-size-profile;
+  }
+}
+
+.kt-content {
+  margin-top: 155px;
+}
+
+.kt-nav {
+  .kt-nav__separator {
+    margin: 0.7rem 0;
+    height: 0;
+    display: block;
+    border-bottom: 1px solid #ebedf2;
+  }
+
+  .kt-nav__custom {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0.55rem 1.75rem;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+}
+
+.kt-header__topbar {
+  .kt-header__topbar-item {
+    &.kt-header__topbar-item--user {
+      .kt-header__topbar-user {
+        padding: 0 0.8rem 0 1.1rem;
+        height: 3rem;
+      }
+    }
+  }
+}
+
+.logo-anchor {
+  display: flex;
+  margin-right: 15px;
+
+  > .logo-image {
+    // height: 20px;
+    width: 100%;
+  }
+}
+
+.top-menu {
+  transition: all 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #f1f3ff;
+
+    div {
+      .icon-container {
+        color: $kt-brand-color;
+      }
+
+      .text {
+        color: $kt-brand-color;
+      }
+
+      .icon-container-second {
+        margin-left: auto;
+
+        mat-icon {
+          color: #91a1e2;
+        }
+      }
+    }
+  }
+
+  div {
+    display: flex;
+    padding: 4px 0 0;
+    width: 100%;
+
+    .icon-container {
+      transition: all 0.3s;
+      margin-right: 10px;
+      color: #93a2dd;
+    }
+
+    .text {
+      transition: all 0.3s;
+      font-family: Roboto;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.64;
+      color: $grey-blue;
+    }
+
+    .icon-container-second {
+      margin-left: auto;
+
+      mat-icon {
+        padding-top: 3px;
+        font-size: 20px;
+        color: transparent;
+        transition: all 0.3s;
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+$disabled-color: rgba(0, 0, 0, 0.55);
+
+:host ::ng-deep .mat-form-field-appearance-outline {
+  .mat-form-field-outline-thick {
+    .mat-form-field-outline-end,
+    .mat-form-field-outline-gap,
+    .mat-form-field-outline-start {
+      border-width: 1px;
+    }
+  }
+
+  &.mat-form-field {
+    .mat-form-field-label {
+      color: rgba(0, 0, 0, 0.87);
+    }
+
+    &.mat-form-field-invalid {
+      .mat-form-field-label {
+        color: #f44336;
+      }
+    }
+  }
+
+  /* disabled */
+  &.mat-form-field-disabled {
+    .mat-form-field-label {
+      color: $disabled-color;
+    }
+  }
+
+  .mat-input-element:disabled {
+    color: $disabled-color;
+  }
+
+  .mat-select-disabled .mat-select-value {
+    color: $disabled-color;
+  }
+}
+
+:host ::ng-deep {
+  .mat-card {
+    margin-bottom: 20px;
+    padding-top: 12px;
+
+    .mat-card-title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .mat-card-content:not(:first-child) {
+      padding-top: 20px;
+    }
+  }
+
+  .mat-tab-body-content {
+    padding-top: 20px;
+  }
+}

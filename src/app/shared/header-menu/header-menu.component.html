@@ -1,0 +1,24 @@
+<div class="kt-header-wrapper" #headerWrapper>
+  <div id="kt_header"
+       class="kt-header kt-header--white kt-grid__item"
+       data-ktheader-minimize="on">
+
+    <div class="kt-header-menu-wrapper"
+         id="kt_header_menu_wrapper">
+
+      <div class="kt-header-menu">
+        <p class="kt-header-menu__title">{{ headerTitle }}</p>
+      </div>
+    </div>
+
+    <!-- begin:: Topbar -->
+    <div class="kt-header__topbar">
+      <!--begin: User -->
+      <ng-content select="[dropdownMenu]"></ng-content>
+      <!--end: User -->
+    </div>
+    <!-- end:: Topbar -->
+  </div>
+
+  <ng-container #subHeaderContentViewContainer></ng-container>
+</div>

@@ -1,0 +1,9 @@
+{
+  "html.format.endWithNewline": true,
+  "html.format.wrapAttributes": "force-aligned",
+  "html.format.enable": true,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "typescript.referencesCodeLens.enabled": true,
+  "files.insertFinalNewline": true
+}

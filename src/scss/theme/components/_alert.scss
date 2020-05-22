@@ -1,0 +1,11 @@
+@import '../utils/variables';
+
+.alert.alert-outline-danger {
+  border-color: $error-color;
+  color: $error-color;
+
+  .alert-text,
+  .alert-icon i {
+    color: $error-color;
+  }
+}

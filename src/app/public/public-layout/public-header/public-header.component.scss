@@ -1,0 +1,27 @@
+$logo-height: 80px;
+$logo-height-mobile: 60px;
+$logo-radius-proportion: 0.25;
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 30px;
+
+  > img {
+    border-radius: $logo-height * $logo-radius-proportion;
+    height: $logo-height;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .logo {
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+    > img {
+      border-radius: $logo-height-mobile * $logo-radius-proportion;
+      height: $logo-height-mobile;
+    }
+  }
+}

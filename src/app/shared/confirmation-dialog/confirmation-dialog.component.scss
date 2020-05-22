@@ -1,0 +1,22 @@
+@import '~src/scss/theme/utils/rtl-mixins';
+
+:host {
+  .mat-dialog-content {
+    margin-bottom: 20px;
+  }
+
+  .mat-dialog-actions {
+    justify-content: flex-end;
+    margin-bottom: -4px;
+    min-height: auto;
+    padding: 0;
+
+    .btn {
+      min-width: 100px;
+
+      &:first-child {
+        @include margin-end(10px);
+      }
+    }
+  }
+}

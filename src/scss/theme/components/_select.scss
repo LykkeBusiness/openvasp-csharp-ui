@@ -1,0 +1,73 @@
+@import '../utils/rtl-mixins';
+@import '../utils/variables';
+
+.multiple-select-custom-option {
+  padding: 0 !important;
+
+  > .mat-pseudo-checkbox {
+    display: none !important;
+  }
+
+  > .mat-option-text {
+    > .actions {
+      padding: 0 16px;
+
+      > button {
+        min-width: 100px;
+
+        &:not(:last-of-type) {
+          @include margin-end(16px);
+        }
+      }
+    }
+  }
+}
+
+.mat-optgroup {
+  .mat-optgroup-label {
+    color: $dark-primary-text;
+    font-weight: bold;
+  }
+
+  .mat-option-multiple {
+    @include padding-start(32px);
+  }
+}
+
+.select-panel {
+  max-height: 400px !important;
+}
+
+.mat-select-with-tag {
+  .mat-select-value {
+    overflow: initial;
+
+    .mat-select-value-with-tag {
+      align-items: center;
+      display: flex;
+      height: 1em;
+      justify-content: space-between;
+
+      .mat-select-value-text {
+        white-space: normal;
+      }
+    }
+  }
+
+  .select-tag-container {
+    margin-top: -8px;
+  }
+
+  .select-tag-text {
+    background-color: rgb(223, 225, 230);
+    border-radius: 3px;
+    color: rgb(66, 82, 110);
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 600;
+    line-height: 1;
+    max-width: 100%;
+    padding: 3px 5px;
+    text-transform: uppercase;
+  }
+}

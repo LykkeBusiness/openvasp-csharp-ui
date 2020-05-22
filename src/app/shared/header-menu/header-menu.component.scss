@@ -1,0 +1,53 @@
+@import '~src/scss/theme/utils/variables';
+
+.kt-header-wrapper {
+  position: fixed;
+  width: calc(100% - 260px);
+  top: 0;
+  z-index: 9;
+
+  &.shadowed-bottom {
+    box-shadow: 0 1px 15px 0 rgba(69, 65, 78, 0.5);
+  }
+
+  .kt-header {
+    &--white {
+      background-color: #fff !important;
+      border-bottom: 1px solid #eff0f6 !important;
+    }
+
+    .kt-header-menu-wrapper {
+      .kt-header-menu {
+        .kt-header-menu__title {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -ms-flex-item-align: center;
+          align-self: center;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          margin-bottom: 0;
+          font-size: 1.7rem;
+          font-weight: 500;
+          color: $black;
+        }
+      }
+    }
+  }
+}
+
+.kt-aside--minimize,
+.kt-aside--minimizing,
+.kt-aside--minimize-hover {
+  .kt-header-wrapper {
+    width: calc(100% - 78px);
+  }
+}
+
+.kt-header__topbar-icon {
+  background-color: #f9f9f9;
+}

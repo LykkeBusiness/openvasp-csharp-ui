@@ -1,0 +1,30 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+@import 'utils/palettes';
+
+$primary: mat-palette($primary);
+$accent: mat-palette($accent);
+
+$theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
+
+@import 'layout/general';
+@import 'layout/typings';
+
+@import 'components/alert';
+@import 'components/btn';
+@import 'components/common';
+@import 'components/context_badge';
+@import 'components/form';
+@import 'components/mat';
+@import 'components/select';
+@import 'components/tab';
+@import 'components/table';
+@import 'components/snackbar';
+
+@import 'template/badge';
+@import 'template/btn';
+@import 'template/template';

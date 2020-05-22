@@ -1,0 +1,51 @@
+@import 'variables';
+
+$primary: (
+  50: #cfc5f9,
+  100: #cfc5f9,
+  200: #ad9ef6,
+  300: #8876f4,
+  400: #6858f2,
+  500: $blue,
+  600: #2937e7,
+  700: #002fdf,
+  800: #002ad9,
+  900: #001ed0,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+  ),
+);
+
+$accent: (
+  50: #ebf0fc,
+  100: #cfdbea,
+  200: #b5c2d5,
+  300: #98a9c0,
+  400: #8395af,
+  500: $dark-blue,
+  600: #5f74be,
+  700: #4e6076,
+  800: #3f4d60,
+  900: #2c3848,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+  ),
+);

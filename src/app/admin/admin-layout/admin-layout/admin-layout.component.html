@@ -1,0 +1,215 @@
+<div>
+  <!-- begin:: Header Mobile -->
+  <div id="kt_header_mobile"
+       class="kt-header-mobile  kt-header-mobile--fixed ">
+    <div class="kt-header-mobile__logo">
+      <ng-container [ngTemplateOutlet]="logoAnchor"></ng-container>
+    </div>
+    <div class="kt-header-mobile__toolbar">
+      <button class="kt-header-mobile__toolbar-toggler kt-header-mobile__toolbar-toggler--left"
+              id="kt_aside_mobile_toggler"><span></span></button>
+      <button class="kt-header-mobile__toolbar-topbar-toggler"
+              id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
+    </div>
+  </div>
+  <!-- end:: Header Mobile -->
+
+  <div class="kt-grid kt-grid--hor kt-grid--root">
+    <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+      <!-- begin:: Aside -->
+      <button class="kt-aside-close "
+              id="kt_aside_close_btn"><i class="la la-close"></i></button>
+      <div class="kt-aside  kt-aside--fixed  kt-grid__item kt-grid kt-grid--desktop kt-grid--hor-desktop"
+           id="kt_aside">
+        <div class="kt-aside__brand   kt-grid__item"
+             id="kt_aside_brand">
+          <div class="kt-aside__brand-logo">
+            <ng-container [ngTemplateOutlet]="logoAnchor"></ng-container>
+          </div>
+          <div class="kt-aside__brand-tools">
+            <button class="kt-aside__brand-aside-toggler kt-aside__brand-aside-toggler--left"
+                    id="kt_aside_toggler"><span></span></button>
+          </div>
+        </div>
+        <!-- end:: Aside -->
+
+        <!-- begin:: Aside Menu -->
+        <div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid"
+             id="kt_aside_menu_wrapper">
+          <div id="kt_aside_menu"
+               class="kt-aside-menu "
+               data-ktmenu-vertical="1"
+               data-ktmenu-scroll="1"
+               data-ktmenu-dropdown-timeout="500">
+            <ul class="kt-menu__nav ">
+              <li class="kt-menu__section ">
+                <h4 class="kt-menu__section-text"
+                    i18n>Main Menu</h4>
+                <i class="kt-menu__section-icon flaticon-more-v2"></i>
+              </li>
+              <li class="kt-menu__item "
+                  routerLinkActive="kt-menu__item--active">
+                <a class="kt-menu__link "
+                   routerLink="transactions">
+                  <mat-icon class="kt-menu__link-icon material-icons-outlined">swap_horiz</mat-icon>
+                  <span class="kt-menu__link-text"
+                        i18n>Transactions</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- end:: Aside Menu -->
+      </div>
+
+      <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper">
+        <!-- begin:: Header -->
+        <app-header-menu>
+          <!--begin: User -->
+          <div *ngIf="user"
+               class="kt-header__topbar-item kt-header__topbar-item--user"
+               dropdownMenu>
+            <div id="btn_account"
+                 class="kt-header__topbar-wrapper"
+                 data-toggle="dropdown"
+                 data-offset="2px,0px">
+              <div class="kt-header__topbar-user">
+                <span class="kt-header__topbar-username kt-hidden-mobile">
+                  {{user.Email}}
+                </span>
+                <span class="kt-header__topbar-icon"
+                      style="height: 25px; width: 25px;">
+                  <mat-icon class="material-icons-outlined"
+                            style="font-size: 25px; color: #4e3a96;">account_circle
+                  </mat-icon>
+                </span>
+              </div>
+            </div>
+            <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-md"
+                 style="width: 300px">
+              <div class="kt-user-card kt-margin-b-40 kt-margin-b-30-tablet-and-mobile">
+                <div class="kt-user-card__wrapper">
+                  <div class="kt-user-card__pic">
+                    <span
+                          class="badge badge-secondary badge-user-initials badge-user-initials--profile">{{userInitials}}</span>
+                  </div>
+                  <div class="kt-user-card__details">
+                    <div class="kt-user-card__name">{{user.FirstName}} {{user.LastName}}</div>
+                    <div class="kt-user-card__position"
+                         style="word-break: break-word;">
+                      {{user.Email}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul class="kt-nav kt-margin-b-10">
+                <li class="kt-nav__custom kt-space-between top-menu">
+                  <div [routerLink]="['users/edit-admin-user', user.Id]">
+                    <span class="icon-container">
+                      <mat-icon class="material-icons-outlined">person</mat-icon>
+                    </span>
+                    <span i18n
+                          class="text">
+                      My Profile
+                    </span>
+                  </div>
+                </li>
+                <li class="kt-nav__custom kt-space-between top-menu"
+                    (click)="goToHelp()">
+                  <div id="btn_help">
+                    <span class="icon-container">
+                      <mat-icon class="material-icons-outlined">help_outline</mat-icon>
+                    </span>
+                    <span i18n
+                          class="text">
+                      Help
+                    </span>
+                    <span class="icon-container-second">
+                      <mat-icon class="material-icons-outlined">open_in_new</mat-icon>
+                    </span>
+                  </div>
+                </li>
+                <li class="kt-nav__separator kt-nav__separator--fit"></li>
+                <li class="kt-nav__custom kt-space-between">
+                  <a href="javascript:void(0)"
+                     class="btn btn-label-brand btn-upper btn-sm btn-bold"
+                     (click)="logout()"
+                     i18n>Logout</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </app-header-menu>
+        <!-- end:: Header -->
+
+        <div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
+             id="kt_content">
+          <!-- begin:: Content -->
+          <router-outlet></router-outlet>
+          <!-- end:: Content -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #logoAnchor>
+  <a href="/"
+     class="logo-anchor">
+    <img class="logo-image"
+         alt="Logo"
+         src="assets/images/logo.png?v=1" />
+  </a>
+</ng-template>
+
+<div #errorMessageElement
+     hidden
+     i18n>Something went wrong. Please try again or contact support.</div>
+
+<div #errorImageUploadMessageElement
+     hidden
+     i18n>Error occured during uploading image(s). Please try again or contact
+  support.</div>
+
+<div #closeSnackbarBtnTextElement
+     hidden
+     i18n>Close</div>
+
+<!-- #region Translates for errors -->
+
+<ng-template #lengthError
+             let-ctx>
+  <div i18n>Field has to be between {{ctx.min}} and {{ctx.max}} characters long</div>
+</ng-template>
+
+<ng-template #moneyFormatError>
+  <div i18n>Invalid number</div>
+</ng-template>
+
+<ng-template #minNumberError
+             let-ctx>
+  <div i18n>Minimum required number is {{ctx.min}}</div>
+</ng-template>
+
+<ng-template #minMoreZeroNumberError>
+  <div i18n>Number should be greater than 0</div>
+</ng-template>
+
+<ng-template #maxNumberError
+             let-ctx>
+  <div i18n>Maximum number can be {{ctx.max}}</div>
+</ng-template>
+
+<ng-template #invalidAccuracyError
+             let-ctx>
+  <div i18n>Maximum number accuracy is {{ctx.accuracy}}</div>
+</ng-template>
+
+<ng-template #intRangeError
+             let-ctx>
+  <div i18n>Field has to be between {{ctx.min}} and {{ctx.max}}</div>
+</ng-template>
+
+<!-- endregion -->

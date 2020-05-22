@@ -1,0 +1,29 @@
+# Auto normalize line-endings
+
+* text eol=lf encoding=UTF-8
+
+# Images & Media
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.ico     binary
+*.mov     binary
+*.ico     binary
+*.pdf     binary
+
+# Fonts
+src/assets/vendors/global/fonts/@fortawesome/fa-regular-400.svg     binary
+src/assets/vendors/global/fonts/@fortawesome/fa-brands-400.svg      binary
+src/assets/vendors/global/fonts/@fortawesome/fa-solid-900.svg       binary
+src/assets/vendors/global/fonts/flaticon/Flaticon.svg               binary
+src/assets/vendors/global/fonts/flaticon2/Flaticon2.svg             binary
+src/assets/vendors/global/fonts/line-awesome/line-awesome.svg       binary
+src/assets/vendors/global/fonts/socicon/socicon.svg                 binary
+*.ttf       binary
+*.eot       binary
+*.woff      binary
+*.woff2     binary
+
+# Angular
+package-lock.json     binary

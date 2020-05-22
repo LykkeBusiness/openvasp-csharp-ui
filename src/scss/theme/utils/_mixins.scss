@@ -1,0 +1,30 @@
+@mixin modal() {
+  &-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+  }
+
+  &-content {
+    background: #fff;
+    bottom: auto;
+    left: 0;
+    margin: auto;
+    max-width: 100%;
+    padding: 15px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 500px;
+    z-index: 101;
+
+    ._actions {
+      text-align: right;
+      width: 100%;
+    }
+  }
+}

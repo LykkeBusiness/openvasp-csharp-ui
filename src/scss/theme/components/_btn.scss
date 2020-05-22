@@ -1,0 +1,32 @@
+.btn-search,
+.btn-clear {
+  cursor: pointer;
+}
+
+.btn-toggle-search.mat-icon {
+  color: $kt-brand-color;
+  cursor: pointer;
+  font-size: 130%;
+  height: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.btn--row-action {
+  .material-icons {
+    font-size: 20px;
+    line-height: 24px;
+  }
+}
+
+.btn.btn-back {
+  color: $grey-blue;
+  display: inline-flex;
+  margin-left: 0;
+  padding-left: 0;
+
+  > .mat-icon {
+    font-size: 16px;
+    height: 16px;
+  }
+}

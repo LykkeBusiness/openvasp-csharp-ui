@@ -1,0 +1,19 @@
+@import '../utils/variables';
+
+.kt-badge {
+  position: relative;
+  top: -1px;
+
+  &--md {
+    margin-right: 6px;
+  }
+
+  &--active,
+  &--yes-row {
+    background: $kt-success-color;
+  }
+
+  &--gray {
+    background: #6c757d;
+  }
+}
