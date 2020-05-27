@@ -28,6 +28,8 @@ export class AdminLayoutComponent implements OnInit {
   //#region global templates
   @ViewChild('lengthError', {static: true})
   lengthError: TemplateRef<any>;
+  @ViewChild('fixedLengthError', {static: true})
+  fixedLengthError: TemplateRef<any>;
   @ViewChild('moneyFormatError', {static: true})
   moneyFormatError: TemplateRef<any>;
   @ViewChild('minNumberError', {static: true})
@@ -87,6 +89,7 @@ export class AdminLayoutComponent implements OnInit {
     //#region global templates
     const templates = this.translateService.templates;
     templates.lengthError = this.lengthError;
+    templates.fixedLengthError = this.fixedLengthError;
     templates.intRangeError = this.intRangeError;
     templates.moneyFormatError = this.moneyFormatError;
     templates.minNumberError = this.minNumberError;

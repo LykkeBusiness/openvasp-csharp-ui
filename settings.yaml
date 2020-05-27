@@ -1,5 +1,3 @@
 BackofficePlatform:
   ApiUrl:
     settings-key: ApiUrl
-  HelpDocumentUrl:
-    settings-key: HelpDocumentUrl

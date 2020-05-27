@@ -2,6 +2,7 @@ import {TemplateRef} from '@angular/core';
 
 export class GlobalTemplates {
   lengthError: TemplateRef<any>;
+  fixedLengthError: TemplateRef<any>;
   moneyFormatError: TemplateRef<any>;
   minNumberError: TemplateRef<any>;
   minMoreZeroNumberError: TemplateRef<any>;

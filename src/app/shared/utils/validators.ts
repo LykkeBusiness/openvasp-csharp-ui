@@ -212,6 +212,14 @@ export function PhoneNumberValidator(control: AbstractControl): {[key: string]: 
   return result ? null : {phone: {valid: false, value: control.value}};
 }
 
+export function VaanValidator(control: AbstractControl): {[key: string]: any} | null {
+  const value = (control.value || '').toString().replace(/\s/g, '');
+  const expression = /^[0-9 A-Z a-z]{24}$/g;
+  const result = expression.test(value);
+
+  return result ? null : {vaan: {valid: false, value: control.value}};
+}
+
 export function OnlyLettersValidator(control: AbstractControl): {[key: string]: any} | null {
   const value = (control.value || '').toString();
   const expression = /^((?![1-9!@#$%^&*()_+{}|:\""?></,;[\]\\=~]).)+$/;

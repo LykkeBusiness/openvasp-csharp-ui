@@ -1,3 +1,19 @@
+.originator-type {
+  .mat-radio-button {
+    margin-right: 15px;
+  }
+}
+
+.originator-type-tabs {
+  > .mat-tab-header {
+    display: none !important;
+  }
+
+  .mat-tab-body-content {
+    padding-top: 0;
+  }
+}
+
 .form-navigation {
   padding: 10px 0;
 }

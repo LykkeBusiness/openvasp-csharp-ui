@@ -15,6 +15,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -34,6 +35,7 @@ import {TokenPipe} from './pipes/token.pipe';
 import {HighlightPipe} from './pipes/highlight.pipe';
 import {HeaderMenuComponent} from './header-menu/header-menu.component';
 import {FileSizePipe} from './pipes/file-size.pipe';
+import {SearchCountryPipe} from './pipes/search-country.pipe';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import {FileSizePipe} from './pipes/file-size.pipe';
     FileSizePipe,
     TokenPipe,
     HighlightPipe,
+    SearchCountryPipe,
+    // components
     HeaderMenuComponent,
   ],
   imports: [
@@ -70,6 +74,7 @@ import {FileSizePipe} from './pipes/file-size.pipe';
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
     MatSelectModule,
     MatSidenavModule,
     MatSlideToggleModule,
@@ -88,6 +93,7 @@ import {FileSizePipe} from './pipes/file-size.pipe';
     FileSizePipe,
     TokenPipe,
     HighlightPipe,
+    SearchCountryPipe,
     // Material
     MatButtonModule,
     MatButtonModule,
@@ -109,6 +115,7 @@ import {FileSizePipe} from './pipes/file-size.pipe';
     MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
     MatSelectModule,
     MatSidenavModule,
     MatSlideToggleModule,

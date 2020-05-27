@@ -1,7 +1,6 @@
 {
   "BackofficePlatform": {
     "ApiUrl": "http://localhost:5000",
-    "ApiUrl2": "http://localhost:5001",
-    "HelpDocumentUrl": "https://google.com"
+    "ApiUrl2": "http://localhost:5001"
   }
 }

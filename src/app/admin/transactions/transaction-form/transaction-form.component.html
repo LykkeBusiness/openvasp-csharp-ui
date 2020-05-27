@@ -5,7 +5,8 @@
   <div class="kt-portlet">
     <div class="kt-portlet__head kt-portlet__head--lg">
       <div class="kt-portlet__head-label">
-        <h3 i18n>Beneficiary</h3>
+        <h3 class="kt-portlet__head-title"
+            i18n>Beneficiary</h3>
       </div>
     </div>
     <div class="kt-portlet__body">
@@ -23,7 +24,7 @@
               <app-error-message [controlName]="transactionFormProps.BeneficiaryFullName"
                                  key="length"
                                  [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 3, max: 200}}"></app-error-message>
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.FullName.MinLength, max: transactionFormValidations.FullName.MaxLength}}"></app-error-message>
             </mat-error>
           </mat-form-field>
         </div>
@@ -40,7 +41,11 @@
               <app-error-message [controlName]="transactionFormProps.BeneficiaryVaan"
                                  key="length"
                                  [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 15, max: 50}}"></app-error-message>
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.Vaan.MinLength, max: transactionFormValidations.Vaan.MaxLength}}">
+              </app-error-message>
+              <app-error-message [controlName]="transactionFormProps.BeneficiaryVaan"
+                                 key="vaan"
+                                 [template]="vaanError"></app-error-message>
             </mat-error>
           </mat-form-field>
         </div>
@@ -51,7 +56,8 @@
   <div class="kt-portlet">
     <div class="kt-portlet__head kt-portlet__head--lg">
       <div class="kt-portlet__head-label">
-        <h3 i18n>Originator</h3>
+        <h3 class="kt-portlet__head-title"
+            i18n>Originator</h3>
       </div>
     </div>
     <div class="kt-portlet__body">
@@ -69,7 +75,7 @@
               <app-error-message [controlName]="transactionFormProps.OriginatorFullName"
                                  key="length"
                                  [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 3, max: 200}}"></app-error-message>
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.FullName.MinLength, max: transactionFormValidations.FullName.MaxLength}}"></app-error-message>
             </mat-error>
           </mat-form-field>
         </div>
@@ -86,19 +92,329 @@
               <app-error-message [controlName]="transactionFormProps.OriginatorVaan"
                                  key="length"
                                  [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 15, max: 50}}"></app-error-message>
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.Vaan.MinLength, max: transactionFormValidations.Vaan.MaxLength}}">
+              </app-error-message>
+              <app-error-message [controlName]="transactionFormProps.OriginatorVaan"
+                                 key="vaan"
+                                 [template]="vaanError"></app-error-message>
             </mat-error>
           </mat-form-field>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 0.5rem">
+        <h6 i18n>Originator Type</h6>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <mat-radio-group class="originator-type"
+                           [(ngModel)]="originatorTypeValue"
+                           [ngModelOptions]="{standalone: true}"
+                           (ngModelChange)="originatorTypeValueChange($event)">
+            <mat-radio-button *ngFor="let type of originatorTypeValues"
+                              [value]="type.Value">
+              {{type.DisplayName}}
+            </mat-radio-button>
+          </mat-radio-group>
         </div>
       </div>
     </div>
   </div>
 
+  <mat-tab-group class="originator-type-tabs"
+                 dynamicHeight="true"
+                 [selectedIndex]="originatorTypeIndex">
+
+    <mat-tab>
+      <div class="kt-portlet">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+          <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">{{originatorTypeValues[originatorTypeIndex]?.DisplayName}}</h3>
+          </div>
+        </div>
+        <div class="kt-portlet__body">
+          <div class="row">
+            <div class="col-xl-4 col-lg-6">
+              <mat-form-field appearance="outline"
+                              class="width-100">
+                <mat-label i18n>BIC</mat-label>
+                <input id="OriginatorBic"
+                       matInput
+                       [formControlName]="transactionFormProps.OriginatorBic"
+                       required>
+                <mat-error>
+                  <app-error-message [controlName]="transactionFormProps.OriginatorBic"></app-error-message>
+                  <app-error-message [controlName]="transactionFormProps.OriginatorBic"
+                                     key="length"
+                                     [template]="templates.lengthError"
+                                     [templateContext]="{$implicit: {min: transactionFormValidations.Bic.MinLength, max: transactionFormValidations.Bic.MaxLength}}">
+                  </app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab>
+      <div class="kt-portlet">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+          <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">{{originatorTypeValues[originatorTypeIndex]?.DisplayName}}</h3>
+          </div>
+        </div>
+        <div [formGroup]="originatorJuridicalPersonIdsFormArray"
+             class="kt-portlet__body">
+          <div *ngFor="let jurPerson of originatorJuridicalPersonIdsFormArray.controls"
+               [formGroup]="jurPerson"
+               class="row">
+            <div class="col-xl-3 col-lg-6">
+              <mat-form-field appearance="outline"
+                              class="width-100">
+                <mat-label i18n>Identification Type</mat-label>
+                <mat-select [formControlName]="personFormProps.IdentificationType"
+                            required>
+                  <mat-option *ngFor="let type of juridicalIdentificationTypeValues"
+                              [value]="type.Value">{{type.DisplayName}}</mat-option>
+                </mat-select>
+                <mat-error>
+                  <app-error-message [controlName]="personFormProps.IdentificationType"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-xl-3 col-lg-6">
+              <mat-form-field appearance="outline"
+                              class="width-100">
+                <mat-label i18n>Identifier</mat-label>
+                <input matInput
+                       [formControlName]="personFormProps.Identifier"
+                       required>
+                <mat-error>
+                  <app-error-message [controlName]="personFormProps.Identifier"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-xl-3 col-lg-6">
+              <mat-form-field appearance="outline"
+                              class="width-100">
+                <mat-label i18n>Country</mat-label>
+                <mat-select [formControlName]="personFormProps.CountryIso2Code"
+                            required
+                            panelClass="select-panel"
+                            (openedChange)="!$event && searchCountry = ''"
+                            disableRipple>
+                  <mat-option class="select-search-option"
+                              disabled>
+                    <mat-form-field appearance="standard">
+                      <mat-label i18n>Search</mat-label>
+                      <input type="text"
+                             matInput
+                             [(ngModel)]="searchCountry"
+                             [ngModelOptions]="{standalone: true}"
+                             (keydown)="$event.stopPropagation()"
+                             (click)="$event.stopPropagation()">
+                      <mat-icon *ngIf="searchCountry"
+                                (click)="searchCountry = ''"
+                                matSuffix>clear</mat-icon>
+                    </mat-form-field>
+                  </mat-option>
+                  <mat-option *ngFor="let country of countries | searchCountry : searchCountry"
+                              [hidden]="country.isHidden"
+                              [value]="country.alpha2Code">{{country.name}}</mat-option>
+                </mat-select>
+                <mat-error>
+                  <app-error-message [controlName]="personFormProps.CountryIso2Code"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-xl-3 col-lg-6">
+              <mat-form-field appearance="outline"
+                              class="width-100">
+                <mat-label i18n>Non State Issuer</mat-label>
+                <input matInput
+                       [formControlName]="personFormProps.NonStateIssuer"
+                       required>
+                <mat-error>
+                  <app-error-message [controlName]="personFormProps.NonStateIssuer"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label></ng-template>
+      <div class="kt-portlet">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+          <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">{{originatorTypeValues[originatorTypeIndex]?.DisplayName}}</h3>
+          </div>
+        </div>
+        <div class="kt-portlet__body">
+          <ng-container [formGroup]="originatorNaturalPersonIdsFormArray">
+            <div *ngFor="let natPerson of originatorNaturalPersonIdsFormArray.controls"
+                 [formGroup]="natPerson"
+                 class="row">
+              <div class="col-xl-3 col-lg-6">
+                <mat-form-field appearance="outline"
+                                class="width-100">
+                  <mat-label i18n>Identification Type</mat-label>
+                  <mat-select [formControlName]="personFormProps.IdentificationType"
+                              required>
+                    <mat-option *ngFor="let type of naturalIdentificationTypeValues"
+                                [value]="type.Value">{{type.DisplayName}}</mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <app-error-message [controlName]="personFormProps.IdentificationType"></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <mat-form-field appearance="outline"
+                                class="width-100">
+                  <mat-label i18n>Identifier</mat-label>
+                  <input matInput
+                         [formControlName]="personFormProps.Identifier"
+                         required>
+                  <mat-error>
+                    <app-error-message [controlName]="personFormProps.Identifier"></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <mat-form-field appearance="outline"
+                                class="width-100">
+                  <mat-label i18n>Country</mat-label>
+                  <mat-select [formControlName]="personFormProps.CountryIso2Code"
+                              required
+                              panelClass="select-panel"
+                              (openedChange)="!$event && searchCountry = ''"
+                              disableRipple>
+                    <mat-option class="select-search-option"
+                                disabled>
+                      <mat-form-field appearance="standard">
+                        <mat-label i18n>Search</mat-label>
+                        <input type="text"
+                               matInput
+                               [(ngModel)]="searchCountry"
+                               [ngModelOptions]="{standalone: true}"
+                               (keydown)="$event.stopPropagation()"
+                               (click)="$event.stopPropagation()">
+                        <mat-icon *ngIf="searchCountry"
+                                  (click)="searchCountry = ''"
+                                  matSuffix>clear</mat-icon>
+                      </mat-form-field>
+                    </mat-option>
+                    <mat-option *ngFor="let country of countries | searchCountry : searchCountry"
+                                [hidden]="country.isHidden"
+                                [value]="country.alpha2Code">{{country.name}}</mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <app-error-message [controlName]="personFormProps.CountryIso2Code"></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <mat-form-field appearance="outline"
+                                class="width-100">
+                  <mat-label i18n>Non State Issuer</mat-label>
+                  <input matInput
+                         [formControlName]="personFormProps.NonStateIssuer"
+                         required>
+                  <mat-error>
+                    <app-error-message [controlName]="personFormProps.NonStateIssuer"></app-error-message>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </ng-container>
+
+          <div style="margin-bottom: 0.5rem">
+            <h6 i18n>Originator Place Of Birth</h6>
+          </div>
+          <div [formGroup]="transactionForm.get(transactionFormProps.OriginatorPlaceOfBirth)"
+               class="row">
+            <div class="col-xl-4 col-lg-6">
+              <mat-form-field appearance="outline"
+                              class="width-100">
+                <mat-label i18n>Town</mat-label>
+                <input id="placeOfBirthFormPropsTown"
+                       matInput
+                       [formControlName]="placeOfBirthFormProps.Town"
+                       required>
+                <mat-error>
+                  <app-error-message [controlName]="placeOfBirthFormProps.Town"></app-error-message>
+                  <app-error-message [controlName]="placeOfBirthFormProps.Town"
+                                     key="length"
+                                     [template]="templates.lengthError"
+                                     [templateContext]="{$implicit: {min: transactionFormValidations.Town.MinLength, max: transactionFormValidations.Town.MaxLength}}"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+              <mat-form-field appearance="outline"
+                              class="width-100">
+                <mat-label i18n>Country</mat-label>
+                <mat-select [formControlName]="placeOfBirthFormProps.CountryIso2Code"
+                            required
+                            panelClass="select-panel"
+                            (openedChange)="!$event && searchCountry = ''"
+                            disableRipple>
+                  <mat-option class="select-search-option"
+                              disabled>
+                    <mat-form-field appearance="standard">
+                      <mat-label i18n>Search</mat-label>
+                      <input type="text"
+                             matInput
+                             [(ngModel)]="searchCountry"
+                             [ngModelOptions]="{standalone: true}"
+                             (keydown)="$event.stopPropagation()"
+                             (click)="$event.stopPropagation()">
+                      <mat-icon *ngIf="searchCountry"
+                                (click)="searchCountry = ''"
+                                matSuffix>clear</mat-icon>
+                    </mat-form-field>
+                  </mat-option>
+                  <mat-option *ngFor="let country of countries | searchCountry : searchCountry"
+                              [hidden]="country.isHidden"
+                              [value]="country.alpha2Code">{{country.name}}</mat-option>
+                </mat-select>
+                <mat-error>
+                  <app-error-message [controlName]="placeOfBirthFormProps.CountryIso2Code"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+              <mat-form-field appearance="outline"
+                              class="width-100">
+                <mat-label i18n>Date</mat-label>
+                <input matInput
+                       [matDatepicker]="picker"
+                       [formControlName]="placeOfBirthFormProps.Date"
+                       required>
+                <mat-datepicker-toggle matSuffix
+                                       [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error>
+                  <app-error-message [controlName]="placeOfBirthFormProps.Date"></app-error-message>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
   <div class="kt-portlet"
        [formGroup]="transactionForm.get(transactionFormProps.OriginatorPostalAddress)">
     <div class="kt-portlet__head kt-portlet__head--lg">
       <div class="kt-portlet__head-label">
-        <h3 i18n>Originator Postal Address</h3>
+        <h3 class="kt-portlet__head-title"
+            i18n>Originator Postal Address</h3>
       </div>
     </div>
     <div class="kt-portlet__body">
@@ -116,7 +432,7 @@
               <app-error-message [controlName]="postalAddressFormProps.Street"
                                  key="length"
                                  [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 3, max: 200}}"></app-error-message>
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.Street.MinLength, max: transactionFormValidations.Street.MaxLength}}"></app-error-message>
             </mat-error>
           </mat-form-field>
         </div>
@@ -149,16 +465,17 @@
           <mat-form-field appearance="outline"
                           class="width-100">
             <mat-label i18n>Address</mat-label>
-            <input id="postalAddressFormPropsAddressLine"
-                   matInput
-                   [formControlName]="postalAddressFormProps.AddressLine"
-                   required>
+            <textarea id="postalAddressFormPropsAddressLine"
+                      matInput
+                      [formControlName]="postalAddressFormProps.AddressLine"
+                      required
+                      style="min-height: 60px"></textarea>
             <mat-error>
               <app-error-message [controlName]="postalAddressFormProps.AddressLine"></app-error-message>
               <app-error-message [controlName]="postalAddressFormProps.AddressLine"
                                  key="length"
                                  [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 3, max: 500}}"></app-error-message>
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.AddressLine.MinLength, max: transactionFormValidations.AddressLine.MaxLength}}"></app-error-message>
             </mat-error>
           </mat-form-field>
         </div>
@@ -177,7 +494,7 @@
               <app-error-message [controlName]="postalAddressFormProps.PostCode"
                                  key="length"
                                  [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 3, max: 10}}"></app-error-message>
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.PostCode.MinLength, max: transactionFormValidations.PostCode.MaxLength}}"></app-error-message>
             </mat-error>
           </mat-form-field>
         </div>
@@ -194,7 +511,7 @@
               <app-error-message [controlName]="postalAddressFormProps.Town"
                                  key="length"
                                  [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 2, max: 100}}"></app-error-message>
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.Town.MinLength, max: transactionFormValidations.Town.MaxLength}}"></app-error-message>
             </mat-error>
           </mat-form-field>
         </div>
@@ -203,8 +520,27 @@
                           class="width-100">
             <mat-label i18n>Country</mat-label>
             <mat-select [formControlName]="postalAddressFormProps.CountryIso2Code"
-                        required>
-              <mat-option *ngFor="let country of countries"
+                        required
+                        panelClass="select-panel"
+                        (openedChange)="!$event && searchCountry = ''"
+                        disableRipple>
+              <mat-option class="select-search-option"
+                          disabled>
+                <mat-form-field appearance="standard">
+                  <mat-label i18n>Search</mat-label>
+                  <input type="text"
+                         matInput
+                         [(ngModel)]="searchCountry"
+                         [ngModelOptions]="{standalone: true}"
+                         (keydown)="$event.stopPropagation()"
+                         (click)="$event.stopPropagation()">
+                  <mat-icon *ngIf="searchCountry"
+                            (click)="searchCountry = ''"
+                            matSuffix>clear</mat-icon>
+                </mat-form-field>
+              </mat-option>
+              <mat-option *ngFor="let country of countries | searchCountry : searchCountry"
+                          [hidden]="country.isHidden"
                           [value]="country.alpha2Code">{{country.name}}</mat-option>
             </mat-select>
             <mat-error>
@@ -216,131 +552,11 @@
     </div>
   </div>
 
-  <div class="kt-portlet"
-       *ngIf="transactionForm.get(transactionFormProps.OriginatorPlaceOfBirth).value"
-       [formGroup]="transactionForm.get(transactionFormProps.OriginatorPlaceOfBirth)">
-    <div class="kt-portlet__head kt-portlet__head--lg">
-      <div class="kt-portlet__head-label">
-        <h3 i18n>Originator Place Of Birth</h3>
-      </div>
-    </div>
-    <div class="kt-portlet__body">
-      <div class="row">
-        <div class="col-xl-4 col-lg-6">
-          <mat-form-field appearance="outline"
-                          class="width-100">
-            <mat-label i18n>Town</mat-label>
-            <input id="placeOfBirthFormPropsTown"
-                   matInput
-                   [formControlName]="placeOfBirthFormProps.Town"
-                   required>
-            <mat-error>
-              <app-error-message [controlName]="placeOfBirthFormProps.Town"></app-error-message>
-              <app-error-message [controlName]="placeOfBirthFormProps.Town"
-                                 key="length"
-                                 [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 2, max: 100}}"></app-error-message>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-xl-4 col-lg-6">
-          <mat-form-field appearance="outline"
-                          class="width-100">
-            <mat-label i18n>Country</mat-label>
-            <mat-select [formControlName]="placeOfBirthFormProps.CountryIso2Code"
-                        required>
-              <mat-option *ngFor="let country of countries"
-                          [value]="country.alpha2Code">{{country.name}}</mat-option>
-            </mat-select>
-            <mat-error>
-              <app-error-message [controlName]="placeOfBirthFormProps.CountryIso2Code"></app-error-message>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-xl-4 col-lg-6">
-          <mat-form-field appearance="outline"
-                          class="width-100">
-            <mat-label i18n>Date</mat-label>
-            <input matInput
-                   [matDatepicker]="picker"
-                   [formControlName]="placeOfBirthFormProps.Date"
-                   required>
-            <mat-datepicker-toggle matSuffix
-                                   [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error>
-              <app-error-message [controlName]="placeOfBirthFormProps.Date"></app-error-message>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- <div class="kt-portlet"
-       [formGroup]="transactionForm.get(transactionFormProps.OriginatorPlaceOfBirth)">
-    <div class="kt-portlet__head kt-portlet__head--lg">
-      <div class="kt-portlet__head-label">
-        <h3 i18n>Originator Natural Person</h3>
-      </div>
-    </div>
-    <div class="kt-portlet__body">
-      <div class="row">
-        <div class="col-xl-4 col-lg-6">
-          <mat-form-field appearance="outline"
-                          class="width-100">
-            <mat-label i18n>Town</mat-label>
-            <input id="placeOfBirthFormPropsTown"
-                   matInput
-                   [formControlName]="placeOfBirthFormProps.Town"
-                   required>
-            <mat-error>
-              <app-error-message [controlName]="placeOfBirthFormProps.Town"></app-error-message>
-              <app-error-message [controlName]="placeOfBirthFormProps.Town"
-                                 key="length"
-                                 [template]="templates.lengthError"
-                                 [templateContext]="{$implicit: {min: 2, max: 100}}"></app-error-message>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-xl-4 col-lg-6">
-          <mat-form-field appearance="outline"
-                          class="width-100">
-            <mat-label i18n>Country</mat-label>
-            <mat-select [formControlName]="placeOfBirthFormProps.CountryIso2Code"
-                        required>
-              <mat-option *ngFor="let country of countries"
-                          [value]="country.alpha2Code">{{country.name}}</mat-option>
-            </mat-select>
-            <mat-error>
-              <app-error-message [controlName]="placeOfBirthFormProps.CountryIso2Code"></app-error-message>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-xl-4 col-lg-6">
-          <mat-form-field appearance="outline"
-                          class="width-100">
-            <mat-label i18n>Date</mat-label>
-            <input matInput
-                   [matDatepicker]="picker"
-                   [formControlName]="placeOfBirthFormProps.Date"
-                   required>
-            <mat-datepicker-toggle matSuffix
-                                   [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error>
-              <app-error-message [controlName]="placeOfBirthFormProps.Date"></app-error-message>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <div class="kt-portlet">
     <div class="kt-portlet__head kt-portlet__head--lg">
       <div class="kt-portlet__head-label">
-        <h3 i18n>Amount</h3>
+        <h3 class="kt-portlet__head-title"
+            i18n>Amount</h3>
       </div>
     </div>
     <div class="kt-portlet__body">
@@ -352,15 +568,15 @@
             <input matInput
                    [formControlName]="transactionFormProps.Amount"
                    type="number"
-                   min="0.0001"
-                   step="0.0001"
+                   [min]="transactionFormValidations.Amount.MinNumber"
+                   [step]="transactionFormValidations.Amount.MinNumber"
                    required>
             <mat-error>
               <app-error-message [controlName]="transactionFormProps.Amount"></app-error-message>
               <app-error-message [controlName]="transactionFormProps.Amount"
                                  key="min"
                                  [template]="templates.minNumberError"
-                                 [templateContext]="{$implicit: {min: 0.0001}}"></app-error-message>
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.Amount.MinNumber}}"></app-error-message>
               <app-error-message [controlName]="transactionFormProps.Amount"
                                  key="max"
                                  [template]="templates.maxNumberError"
@@ -369,7 +585,7 @@
               <app-error-message [controlName]="transactionFormProps.Amount"
                                  key="accuracy"
                                  [template]="templates.invalidAccuracyError"
-                                 [templateContext]="{$implicit: {accuracy: 4}}"></app-error-message>
+                                 [templateContext]="{$implicit: {accuracy: transactionFormValidations.Amount.Accuracy}}"></app-error-message>
             </mat-error>
           </mat-form-field>
         </div>
@@ -395,7 +611,8 @@
        class="kt-portlet">
     <div class="kt-portlet__head kt-portlet__head--lg">
       <div class="kt-portlet__head-label">
-        <h3 i18n>Amount</h3>
+        <h3 class="kt-portlet__head-title"
+            i18n>Amount</h3>
       </div>
     </div>
     <div class="kt-portlet__body">
@@ -419,3 +636,7 @@
             i18n>Save</button>
   </div>
 </form>
+
+<ng-template #vaanError>
+  <div i18n>Invalid VAAN</div>
+</ng-template>

@@ -23,6 +23,24 @@
   }
 }
 
+.select-search-option {
+  height: 3.5rem !important;
+  padding: 0 !important;
+
+  .mat-form-field {
+    color: #000;
+    padding: 0 16px;
+    position: relative;
+    top: 6px;
+    width: 100%;
+
+    .mat-icon {
+      cursor: pointer;
+      margin-right: 0;
+    }
+  }
+}
+
 .mat-optgroup {
   .mat-optgroup-label {
     color: $dark-primary-text;

@@ -184,6 +184,11 @@
   <div i18n>Field has to be between {{ctx.min}} and {{ctx.max}} characters long</div>
 </ng-template>
 
+<ng-template #fixedLengthError
+             let-ctx>
+  <div i18n>Length should to be {{ctx.length}}</div>
+</ng-template>
+
 <ng-template #moneyFormatError>
   <div i18n>Invalid number</div>
 </ng-template>
