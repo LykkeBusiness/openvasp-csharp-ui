@@ -14,7 +14,6 @@ import {LengthValidator, AccuracyValidator, IntegerValidator, VaanValidator} fro
 import {ROUTE_ADMIN_ROOT, ROUTE_TRANSACTIONS} from 'src/app/core/constants/routes';
 import {GlobalTemplates} from 'src/app/shared/models/global-templates.interface';
 import {OriginatorType} from '../models/originator-type.enum';
-import {environment} from 'src/environments/environment';
 import {DictionariesService} from 'src/app/shared/services/dictionaries.service';
 
 @Component({
@@ -267,7 +266,7 @@ export class TransactionFormComponent implements OnInit {
     this.originatorJuridicalPersonIdsFormArray.push(this.generatePersonFormGroup());
 
     //#region prefilled test data
-    if (!environment.production && !!localStorage.getItem('prefillTestData')) {
+    if (!!localStorage.getItem('prefillTestData')) {
       const testPrefilledModel: CreateOutgoingTransactionRequest = {
         BeneficiaryFullName: 'BeneficiaryFullName',
         BeneficiaryVaan: 'BBB4 eE5C 524e e3fb 0828 0970',
