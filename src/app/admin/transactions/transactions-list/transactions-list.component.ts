@@ -16,7 +16,10 @@ import {DATETIME_WITH_SECONDS_FORMAT} from 'src/app/core/constants/const';
 export class TransactionsListComponent implements OnInit {
   @ViewChild('subHeaderTemplate', {static: true}) private subHeaderTemplate: TemplateRef<any>;
   isLoadingOutgoing = true;
+  isSearchingOutgoing: boolean;
+
   isLoadingIncoming = true;
+  isSearchingIncoming: boolean;
   outgoingTransactions: TransactionDetailsModel[] = [];
   incomingTransactions: TransactionDetailsModel[] = [];
   TransactionType = TransactionType;
