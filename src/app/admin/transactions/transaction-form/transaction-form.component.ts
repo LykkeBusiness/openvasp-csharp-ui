@@ -15,6 +15,7 @@ import {ROUTE_ADMIN_ROOT, ROUTE_TRANSACTIONS} from 'src/app/core/constants/route
 import {GlobalTemplates} from 'src/app/shared/models/global-templates.interface';
 import {OriginatorType} from '../models/originator-type.enum';
 import {environment} from 'src/environments/environment';
+import {DictionariesService} from 'src/app/shared/services/dictionaries.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -221,7 +222,7 @@ export class TransactionFormComponent implements OnInit {
     return this.transactionForm.get(this.transactionFormProps.OriginatorJuridicalPersonIds) as FormArray;
   }
   //#region  values for select fields
-  assetValues = ['BTC', 'ETH'];
+  assetValues: string[] = [];
   countries: Country[] = [];
   searchCountry = '';
   originatorTypeValues: Array<{Value: OriginatorType; DisplayName: string}> = [
@@ -251,10 +252,12 @@ export class TransactionFormComponent implements OnInit {
   constructor(
     // services
     private countriesService: CountriesService,
+    private dictionariesService: DictionariesService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private translateService: TranslateService
   ) {
+    this.assetValues = this.dictionariesService.assetValues;
     this.countries = this.countriesService.countries;
     this.templates = this.translateService.templates;
   }
@@ -264,7 +267,7 @@ export class TransactionFormComponent implements OnInit {
     this.originatorJuridicalPersonIdsFormArray.push(this.generatePersonFormGroup());
 
     //#region prefilled test data
-    if (!environment.production && window.location.port === '4200') {
+    if (!environment.production && !!localStorage.getItem('prefillTestData')) {
       const testPrefilledModel: CreateOutgoingTransactionRequest = {
         BeneficiaryFullName: 'BeneficiaryFullName',
         BeneficiaryVaan: 'BBB4 eE5C 524e e3fb 0828 0970',
@@ -308,6 +311,11 @@ export class TransactionFormComponent implements OnInit {
         Amount: 0.0001,
       };
 
+      if (window.location.port === '4201') {
+        testPrefilledModel.BeneficiaryVaan = '7dfa ce61 524e e3fb 0828 095d';
+        testPrefilledModel.OriginatorVaan = 'BBB4 eE5C 524e e3fb 0828 0970';
+      }
+
       this.transactionForm.reset(testPrefilledModel);
     }
     //#endregion
@@ -333,8 +341,6 @@ export class TransactionFormComponent implements OnInit {
   }
 
   originatorTypeValueChange(value: OriginatorType) {
-    console.log(value);
-
     const bicControl = this.transactionForm.get(this.transactionFormProps.OriginatorBic);
 
     const juridicalPersonControls = {
@@ -367,7 +373,7 @@ export class TransactionFormComponent implements OnInit {
       [this.placeOfBirthFormProps.Date]: this.originatorPlaceOfBirth.get(this.placeOfBirthFormProps.Date),
     };
 
-    switch (this.originatorTypeValue) {
+    switch (value) {
       case OriginatorType.BIC:
         bicControl.setValidators([Validators.required, ...this.transactionFormDynamicValidators[this.transactionFormProps.OriginatorBic]]);
         bicControl.updateValueAndValidity();
@@ -463,7 +469,7 @@ export class TransactionFormComponent implements OnInit {
     markFormControlAsTouched(this.transactionForm);
 
     if (!this.transactionForm.valid) {
-      console.log(this.transactionForm);
+      // log(this.transactionForm);
       this.snackBar.open('Please check the form and fill the required fields', this.translateService.translates.CloseSnackbarBtnText, {
         duration: 5000,
       });

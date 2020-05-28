@@ -9,6 +9,14 @@ $disabled-color: rgba(0, 0, 0, 0.55);
     }
   }
 
+  &.readonly {
+    .mat-form-field-flex:hover {
+      .mat-form-field-outline-thick {
+        color: rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
+
   &.mat-form-field {
     .mat-form-field-label {
       color: rgba(0, 0, 0, 0.87);

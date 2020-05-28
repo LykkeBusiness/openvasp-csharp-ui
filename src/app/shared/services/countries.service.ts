@@ -16,4 +16,16 @@ export class CountriesService {
   get countries() {
     return this._countries;
   }
+
+  getCountryNameByIso2Code(iso2Code: string): string {
+    if (iso2Code) {
+      const country = this.countries.find((x) => x.alpha2Code === iso2Code);
+
+      if (country) {
+        return country.name;
+      }
+    }
+
+    return null;
+  }
 }

@@ -6,6 +6,7 @@ import {SharedModule} from '../../shared/shared.module';
 import {TransactionsRoutingModule} from './transactions-routing.module';
 import {TransactionCreateComponent} from './transaction-create/transaction-create.component';
 import {TransactionFormComponent} from './transaction-form/transaction-form.component';
+import {TransactionViewComponent} from './transaction-view/transaction-view.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import {TransactionFormComponent} from './transaction-form/transaction-form.comp
     TransactionsListComponent,
     TransactionCreateComponent,
     TransactionFormComponent,
+    TransactionViewComponent,
   ],
   imports: [
     // Modules

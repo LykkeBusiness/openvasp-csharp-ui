@@ -15,3 +15,6 @@ export const LANGUAGES = {
   English: 'en',
   German: 'de',
 };
+
+export const DATETIME_WITH_SECONDS_FORMAT = 'yyyy-MM-dd HH:mm:ss';
+export const DATEONLY_FORMAT = 'yyyy-MM-dd';

@@ -1,0 +1,671 @@
+<ng-template #subHeaderTemplate>
+  <div class="kt-subheader kt-grid__item"
+       id="kt_subheader">
+    <div class="kt-container kt-container--fluid">
+      <div class="kt-subheader__main">
+        <div class="kt-subheader__toolbar"
+             id="kt_subheader_search">
+          <span class="kt-subheader__desc"
+                id="kt_subheader_total"
+                i18n>Transaction details</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+  <ng-container *ngIf="!isLoading">
+    <!-- Transaction -->
+    <div class="kt-portlet">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Transaction</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Transaction ID</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.Id"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Transaction Type</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.TransactionType"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Session ID</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.SessionId"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <!-- {{transaction.CreationDateTime}} -->
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Date/time</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.CreationDateTime | date : DATETIME_WITH_SECONDS_FORMAT"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Transaction Status</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.Status"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div *ngIf="transaction.SessionDeclineCode"
+               class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Session Decline Code</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.SessionDeclineCode"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div *ngIf="transaction.TransferDeclineCode"
+               class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Transfer Decline Code</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.TransferDeclineCode"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transfer -->
+    <div class="kt-portlet"
+         [hidden]="!transaction.DestinationAddress">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Transfer</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Destination Address</mat-label>
+              <input matInput
+                     [ngModel]="transaction.DestinationAddress"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6"
+               [hidden]="!transaction.SendingAddress">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Sending Address</mat-label>
+              <input matInput
+                     [ngModel]="transaction.SendingAddress"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6"
+               [hidden]="!transaction.TransactionHash">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Transaction Hash</mat-label>
+              <input matInput
+                     [ngModel]="transaction.TransactionHash"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Counterparty -->
+    <div class="kt-portlet"
+         [hidden]="!transaction.CounterPartyVaspName">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Counterparty</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Counterparty VASP Name</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.CounterPartyVaspName"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beneficiary -->
+    <div class="kt-portlet"
+         [hidden]="!transaction.BeneficiaryFullName">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Beneficiary</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Beneficiary Full Name</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.BeneficiaryFullName"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Beneficiary VAAN</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.BeneficiaryVaan"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Originator -->
+    <div class="kt-portlet"
+         [hidden]="!transaction.OriginatorFullName">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Originator</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Originator Full Name</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorFullName"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Originator VAAN</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorVaan"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OriginatorBic -->
+    <div *ngIf="transaction.OriginatorBic"
+         class="kt-portlet">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">BIC</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Originator BIC</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorBic"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OriginatorJuridicalPersonIds -->
+    <div *ngIf="transaction.OriginatorJuridicalPersonIds && transaction.OriginatorJuridicalPersonIds.length && transaction.OriginatorJuridicalPersonIds[0].Identifier"
+         class="kt-portlet">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">Juridical Person</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div *ngFor="let jurPerson of transaction.OriginatorJuridicalPersonIds"
+             class="row">
+          <div class="col-xl-3 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Identification Type</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="jurPerson.IdentificationType"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-3 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Identifier</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="jurPerson.Identifier"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-3 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Country</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="jurPerson.IssuingCountry?.Name"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-3 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Non State Issuer</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="jurPerson.NonStateIssuer"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OriginatorNaturalPersonIds -->
+    <div *ngIf="transaction.OriginatorNaturalPersonIds && transaction.OriginatorNaturalPersonIds.length && transaction.OriginatorNaturalPersonIds[0].Identifier"
+         class="kt-portlet">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title">Juridical Person</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div *ngFor="let natPerson of transaction.OriginatorNaturalPersonIds"
+             class="row">
+          <div class="col-xl-3 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Identification Type</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="natPerson.IdentificationType"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-3 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Identifier</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="natPerson.Identifier"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-3 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Country</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="natPerson.IssuingCountry?.Name"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-3 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Non State Issuer</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="natPerson.NonStateIssuer"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- OriginatorPlaceOfBirthTown -->
+        <div *ngIf="transaction.OriginatorPlaceOfBirthTown"
+             style="margin-bottom: 0.5rem">
+          <h6 i18n>Originator Place Of Birth</h6>
+        </div>
+        <div *ngIf="transaction.OriginatorPlaceOfBirthTown"
+             class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Town</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorPlaceOfBirthTown"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Country</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorPlaceOfBirthCountryIso2Code && getCountryNameByIso2Code(transaction.OriginatorPlaceOfBirthCountryIso2Code)"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Date</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorPlaceOfBirthDate | date : DATEONLY_FORMAT"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OriginatorPostalAddress -->
+    <div *ngIf="transaction.OriginatorPostalAddressTown"
+         class="kt-portlet">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Originator Postal Address</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Street</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorPostalAddressStreet"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Building</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorPostalAddressBuilding"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Address</mat-label>
+              <textarea matInput
+                        [ngModel]="transaction.OriginatorPostalAddressAddressLine"
+                        readonly
+                        style="min-height: 60px"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Post Code</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorPostalAddressPostCode"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Town</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorPostalAddressTown"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Country</mat-label>
+              <input matInput
+                     placeholder=""
+                     [ngModel]="transaction.OriginatorPostalAddressCountryIso2Code && getCountryNameByIso2Code(transaction.OriginatorPostalAddressCountryIso2Code)"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Amount -->
+    <div class="kt-portlet"
+         [hidden]="!transaction.Amount">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Amount</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Amount</mat-label>
+              <input matInput
+                     [ngModel]="transaction.Amount"
+                     readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100 readonly">
+              <mat-label i18n>Asset</mat-label>
+              <input matInput
+                     [ngModel]="transaction.Asset"
+                     readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Session Reply -->
+    <div *ngIf="transaction.Status === TransactionStatus.SessionRequested && transaction.TransactionType === TransactionType.Incoming"
+         class="kt-portlet"
+         [class.red-border]="!sessionReplyModel.Code">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Session Reply</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100">
+              <mat-label i18n>Code</mat-label>
+              <mat-select [(ngModel)]="sessionReplyModel.Code"
+                          required>
+                <mat-option *ngFor="let code of sessionReplyMessageCodeValues"
+                            [value]="code.Value">{{code.DisplayName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transfer Reply -->
+    <div *ngIf="transaction.Status === TransactionStatus.TransferRequested && transaction.TransactionType === TransactionType.Incoming"
+         class="kt-portlet"
+         [class.red-border]="!isValidTransferReply">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Transfer Reply</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100">
+              <mat-label i18n>Code</mat-label>
+              <mat-select [(ngModel)]="transferReplyModel.Code"
+                          required>
+                <mat-option *ngFor="let code of transferReplyMessageCodeValues"
+                            [value]="code.Value">{{code.DisplayName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100">
+              <mat-label i18n>Destination Address</mat-label>
+              <input matInput
+                     placeholder=""
+                     [(ngModel)]="transferReplyModel.DestinationAddress">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transfer Dispatch -->
+    <div *ngIf="transaction.Status === TransactionStatus.TransferAllowed && transaction.TransactionType === TransactionType.Outgoing"
+         class="kt-portlet"
+         [class.red-border]="!transferDispatchModel.SendingAddress || !transferDispatchModel.TransactionHash">
+      <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+          <h3 class="kt-portlet__head-title"
+              i18n>Transfer Dispatch</h3>
+        </div>
+      </div>
+      <div class="kt-portlet__body">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100">
+              <mat-label i18n>Sending Address</mat-label>
+              <input matInput
+                     placeholder=""
+                     [(ngModel)]="transferDispatchModel.SendingAddress"
+                     required>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4 col-lg-6">
+            <mat-form-field appearance="outline"
+                            class="width-100">
+              <mat-label i18n>Transaction Hash</mat-label>
+              <input matInput
+                     placeholder=""
+                     [(ngModel)]="transferDispatchModel.TransactionHash"
+                     required>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-navigation d-flex justify-content-between align-items-center">
+      <button type="button"
+              class="btn btn-outline-brand btn-upper btn-bold"
+              style="min-width: 120px;"
+              [routerLink]="[navigateToListUrl]"
+              [disabled]="isLoading"
+              i18n>Cancel</button>
+
+      <div>
+        <button *ngIf="transaction.Status === TransactionStatus.SessionRequested && transaction.TransactionType === TransactionType.Incoming"
+                type="button"
+                class="btn btn-brand btn-upper btn-bold"
+                style="min-width: 120px;"
+                (click)="sessionReply()"
+                [disabled]="isSaving || !sessionReplyModel.Code"
+                i18n>Session Reply</button>
+        <button *ngIf="transaction.Status === TransactionStatus.TransferRequested && transaction.TransactionType === TransactionType.Incoming"
+                type="button"
+                class="btn btn-brand btn-upper btn-bold"
+                style="min-width: 120px;"
+                (click)="transferReply()"
+                [disabled]="isSaving || !isValidTransferReply"
+                i18n>Transfer Reply</button>
+        <button *ngIf="transaction.Status === TransactionStatus.TransferAllowed && transaction.TransactionType === TransactionType.Outgoing"
+                type="button"
+                class="btn btn-brand btn-upper btn-bold"
+                style="min-width: 120px;"
+                (click)="transferDispatch()"
+                [disabled]="isSaving || !transferDispatchModel.SendingAddress || !transferDispatchModel.TransactionHash"
+                i18n>Transfer Dispatch</button>
+        <button *ngIf="transaction.Status === TransactionStatus.TransferDispatched && transaction.TransactionType === TransactionType.Incoming"
+                type="button"
+                class="btn btn-brand btn-upper btn-bold"
+                style="min-width: 120px;"
+                (click)="transferConfirm()"
+                [disabled]="isSaving"
+                i18n>Transfer Confirm</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="spinner-container"
+       *ngIf="isLoading || isSaving">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</div>

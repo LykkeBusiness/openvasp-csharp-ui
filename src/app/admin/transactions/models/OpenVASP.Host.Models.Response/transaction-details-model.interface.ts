@@ -1,3 +1,7 @@
+import {VaspInformation} from '../OpenVASP.Messaging.Messages.Entities/vasp-information.interface';
+import {NaturalPersonId} from '../OpenVASP.Messaging.Messages.Entities/natural-person-id.interface';
+import {JuridicalPersonId} from '../OpenVASP.Messaging.Messages.Entities/juridical-person-id.interface';
+
 export interface TransactionDetailsModel {
   TransactionType: string;
   Id: string;
@@ -9,12 +13,16 @@ export interface TransactionDetailsModel {
   OriginatorPostalAddressAddressLine: string;
   OriginatorPostalAddressPostCode: string;
   OriginatorPostalAddressTown: string;
-  OriginatorPostalAddressCountry: string;
+  OriginatorPostalAddressCountryIso2Code: string;
   OriginatorPlaceOfBirthTown: string;
-  OriginatorPlaceOfBirthCountry: string;
+  OriginatorPlaceOfBirthCountryIso2Code: string;
   OriginatorPlaceOfBirthDate: Date;
   OriginatorFullName: string;
   OriginatorVaan: string;
+  CounterPartyVasp: VaspInformation;
+  OriginatorNaturalPersonIds: NaturalPersonId[];
+  OriginatorJuridicalPersonIds: JuridicalPersonId[];
+  OriginatorBic: string;
   BeneficiaryFullName: string;
   BeneficiaryVaan: string;
   CounterPartyVaspName: string;
@@ -23,4 +31,6 @@ export interface TransactionDetailsModel {
   DestinationAddress: string;
   TransactionHash: string;
   SendingAddress: string;
+  SessionDeclineCode: string;
+  TransferDeclineCode: string;
 }

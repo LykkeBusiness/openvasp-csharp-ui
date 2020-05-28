@@ -4,6 +4,9 @@ import {TranslateService} from 'src/app/shared/services/translate.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HeaderMenuService} from 'src/app/shared/services/header-menu.service';
 import {TransactionDetailsModel} from '../models/OpenVASP.Host.Models.Response/transaction-details-model.interface';
+import {TransactionType} from '../models/OpenVASP.Host.Core.Models/transaction-type.enum';
+import {TransactionStatus} from '../models/OpenVASP.Host.Core.Models/transaction-status.enum';
+import {DATETIME_WITH_SECONDS_FORMAT} from 'src/app/core/constants/const';
 
 @Component({
   selector: 'app-transactions-list',
@@ -16,6 +19,9 @@ export class TransactionsListComponent implements OnInit {
   isLoadingIncoming = true;
   outgoingTransactions: TransactionDetailsModel[] = [];
   incomingTransactions: TransactionDetailsModel[] = [];
+  TransactionType = TransactionType;
+  TransactionStatus = TransactionStatus;
+  DATETIME_WITH_SECONDS_FORMAT = DATETIME_WITH_SECONDS_FORMAT;
 
   constructor(
     // services
@@ -35,21 +41,11 @@ export class TransactionsListComponent implements OnInit {
   }
 
   private getData() {
-    this.isLoadingIncoming = true;
+    this.getOutgoing();
+    this.getIncoming();
+  }
 
-    this.transactionsService.getIncomingTransactions().subscribe(
-      (transactions) => {
-        this.incomingTransactions = transactions;
-      },
-      (error) => {
-        console.error(error);
-        this.snackBar.open(this.translateService.translates.ErrorMessage, this.translateService.translates.CloseSnackbarBtnText);
-      },
-      () => {
-        this.isLoadingIncoming = false;
-      }
-    );
-
+  getOutgoing() {
     this.isLoadingOutgoing = true;
 
     this.transactionsService.getOutgoingTransactions().subscribe(
@@ -62,6 +58,23 @@ export class TransactionsListComponent implements OnInit {
       },
       () => {
         this.isLoadingOutgoing = false;
+      }
+    );
+  }
+
+  getIncoming() {
+    this.isLoadingIncoming = true;
+
+    this.transactionsService.getIncomingTransactions().subscribe(
+      (transactions) => {
+        this.incomingTransactions = transactions;
+      },
+      (error) => {
+        console.error(error);
+        this.snackBar.open(this.translateService.translates.ErrorMessage, this.translateService.translates.CloseSnackbarBtnText);
+      },
+      () => {
+        this.isLoadingIncoming = false;
       }
     );
   }

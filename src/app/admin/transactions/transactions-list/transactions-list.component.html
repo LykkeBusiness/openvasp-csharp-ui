@@ -26,7 +26,8 @@
   <div class="kt-portlet">
     <div class="kt-portlet__head kt-portlet__head--lg">
       <div class="kt-portlet__head-label">
-        <h3 i18n>Outgoing Transactions</h3>
+        <h3 class="kt-portlet__head-title"
+            i18n>Outgoing Transactions</h3>
       </div>
       <div class="kt-portlet__head-label">
         <div class="spinner-container"
@@ -36,6 +37,10 @@
         <span class="kt-portlet__head-title"
               [hidden]="isLoadingOutgoing || isSearchingOutgoing"
               i18n>{{outgoingTransactions.length}} total</span>
+        <button class="btn btn-outline-brand btn-bold refresh-btn"
+                (click)="getOutgoing()">
+          <span i18n>Refresh</span>
+        </button>
       </div>
     </div>
     <div class="kt-portlet__body">
@@ -67,15 +72,21 @@
               <tr *ngFor="let row of outgoingTransactions; let i = index"
                   class="data-row-{{i}}">
                 <td>{{row.Id}}</td>
-                <td>{{row.CreationDateTime}}</td>
-                <td>{{row.Status}}</td>
+                <td>{{row.CreationDateTime | date : DATETIME_WITH_SECONDS_FORMAT}}</td>
+                <td>
+                  <ng-container [ngTemplateOutlet]="statusBadge"
+                                [ngTemplateOutletContext]="{$implicit: {row: row}}">
+                  </ng-container>
+                  <span>{{row.Status}}</span>
+                </td>
                 <td>{{row.OriginatorFullName}}</td>
                 <td>{{row.BeneficiaryFullName}}</td>
                 <td>{{row.CounterPartyVaspName}}</td>
-                <td>{{row.Amount}}</td>
+                <td class="text-right">{{row.Amount}}</td>
                 <td>{{row.Asset}}</td>
-                <td>
-                  <a [routerLink]="['view-transaction', row.Id]"
+                <td class="text-right">
+                  <a [routerLink]="['view', row.Id]"
+                     [queryParams]="{ type: TransactionType.Outgoing }"
                      matTooltip="View"
                      i18n-matTooltip
                      class="btn btn-sm btn-clean btn-icon btn--row-action">
@@ -106,7 +117,8 @@
   <div class="kt-portlet">
     <div class="kt-portlet__head kt-portlet__head--lg">
       <div class="kt-portlet__head-label">
-        <h3 i18n>Incoming Transactions</h3>
+        <h3 class="kt-portlet__head-title"
+            i18n>Incoming Transactions</h3>
       </div>
       <div class="kt-portlet__head-label">
         <div class="spinner-container"
@@ -116,6 +128,10 @@
         <span class="kt-portlet__head-title"
               [hidden]="isLoadingIncoming || isSearchingIncoming"
               i18n>{{incomingTransactions.length}} total</span>
+        <button class="btn btn-outline-brand btn-bold refresh-btn"
+                (click)="getIncoming()">
+          <span i18n>Refresh</span>
+        </button>
       </div>
     </div>
     <div class="kt-portlet__body">
@@ -147,15 +163,21 @@
               <tr *ngFor="let row of incomingTransactions; let i = index"
                   class="data-row-{{i}}">
                 <td>{{row.Id}}</td>
-                <td>{{row.CreationDateTime}}</td>
-                <td>{{row.Status}}</td>
+                <td>{{row.CreationDateTime | date : DATETIME_WITH_SECONDS_FORMAT}}</td>
+                <td>
+                  <ng-container [ngTemplateOutlet]="statusBadge"
+                                [ngTemplateOutletContext]="{$implicit: {row: row}}">
+                  </ng-container>
+                  <span>{{row.Status}}</span>
+                </td>
                 <td>{{row.OriginatorFullName}}</td>
                 <td>{{row.BeneficiaryFullName}}</td>
                 <td>{{row.CounterPartyVaspName}}</td>
-                <td>{{row.Amount}}</td>
+                <td class="text-right">{{row.Amount}}</td>
                 <td>{{row.Asset}}</td>
-                <td>
-                  <a [routerLink]="['view-transaction', row.Id]"
+                <td class="text-right">
+                  <a [routerLink]="['view', row.Id]"
+                     [queryParams]="{ type: TransactionType.Incoming }"
                      matTooltip="View"
                      i18n-matTooltip
                      class="btn btn-sm btn-clean btn-icon btn--row-action">
@@ -183,3 +205,10 @@
     </div>
   </div>
 </div>
+
+<ng-template #statusBadge
+             let-ctx>
+  <span class="kt-badge kt-badge--dot kt-badge--md kt-badge--gray"
+        [class.kt-badge--orange]="ctx.row.Status === TransactionStatus.SessionRequested || ctx.row.Status === TransactionStatus.TransferRequested || ctx.row.Status === TransactionStatus.TransferDispatched"
+        [class.kt-badge--green]="ctx.row.Status === TransactionStatus.SessionConfirmed || ctx.row.Status === TransactionStatus.TransferAllowed || ctx.row.Status === TransactionStatus.TransferConfirmed"></span>
+</ng-template>

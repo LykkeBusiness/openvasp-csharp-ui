@@ -8,12 +8,17 @@
     margin-right: 6px;
   }
 
-  &--active,
-  &--yes-row {
-    background: $kt-success-color;
-  }
-
   &--gray {
     background: #6c757d;
+  }
+
+  &--orange {
+    background: $orange;
+  }
+
+  &--active,
+  &--yes-row,
+  &--green {
+    background: $kt-success-color;
   }
 }

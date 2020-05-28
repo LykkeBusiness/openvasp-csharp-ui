@@ -58,3 +58,16 @@ i.success {
 i.fail {
   color: $error-color;
 }
+
+input,
+select,
+textarea {
+  &[readonly],
+  .readonly {
+    cursor: default;
+  }
+}
+
+.red-border {
+  border: 1px solid $error-color;
+}

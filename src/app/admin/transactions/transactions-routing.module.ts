@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {TransactionsListComponent} from './transactions-list/transactions-list.component';
 import {TransactionCreateComponent} from './transaction-create/transaction-create.component';
+import {TransactionViewComponent} from './transaction-view/transaction-view.component';
 
 const routes: Routes = [
   {
@@ -12,10 +13,10 @@ const routes: Routes = [
     path: 'create',
     component: TransactionCreateComponent,
   },
-  // {
-  //   path: `view/:id`,
-  //   component: TransactionViewComponent
-  // },
+  {
+    path: `view/:id`,
+    component: TransactionViewComponent,
+  },
 ];
 
 @NgModule({
