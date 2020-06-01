@@ -1,0 +1,19 @@
+.spinner-wrapper {
+  position: relative;
+
+  .spinner-container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -100%);
+
+    &--top {
+      transform: translate(-50%);
+    }
+  }
+}
+
+.refresh-btn {
+  display: inline-flex;
+  height: 34px;
+  margin-left: 15px;
+}

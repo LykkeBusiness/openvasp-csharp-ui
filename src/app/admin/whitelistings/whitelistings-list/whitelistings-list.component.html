@@ -1,0 +1,76 @@
+<ng-template #subHeaderTemplate>
+  <div class="kt-subheader kt-grid__item"
+       id="kt_subheader">
+    <div class="kt-container kt-container--fluid">
+      <div class="kt-subheader__main">
+        <div class="kt-subheader__toolbar"
+             id="kt_subheader_search">
+          <span class="kt-subheader__desc"
+                id="kt_subheader_total"
+                i18n>Lists of whitelistings in OpenVASP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+  <div class="kt-portlet">
+    <div class="kt-portlet__head kt-portlet__head--lg">
+      <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title"
+            i18n>Whitelistings</h3>
+      </div>
+      <div class="kt-portlet__head-label">
+        <div class="spinner-container"
+             *ngIf="isLoading || isSearching">
+          <div class="spinner-border"></div>
+        </div>
+        <span class="kt-portlet__head-title"
+              [hidden]="isLoadin || isSearching"
+              i18n>{{whitelistings.length}} total</span>
+      </div>
+    </div>
+    <div class="kt-portlet__body">
+
+      <div class="spinner-wrapper">
+        <div class="spinner-container spinner-container--top"
+             *ngIf="isSearching">
+          <div class="spinner-border"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="table-wrapper">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th i18n>Name</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of whitelistings; let i = index"
+                  class="data-row-{{i}}">
+                <td>{{row.Name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="spinner-wrapper">
+          <div class="spinner-container spinner-container"
+               *ngIf="isLoading">
+            <div class="spinner-border"></div>
+          </div>
+        </div>
+
+        <div class="table-states-container text-center">
+          <ng-container *ngIf="!isLoading && !isSearching && whitelistings.length === 0">
+            <span i18n>There are no whitelistings</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
