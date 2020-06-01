@@ -16,6 +16,10 @@ const routes: Routes = [
         path: 'transactions',
         loadChildren: () => import('./transactions/transactions.module').then((m) => m.TransactionsModule),
       },
+      {
+        path: 'whitelistings',
+        loadChildren: () => import('./whitelistings/whitelistings.module').then((m) => m.WhitelistingsModule),
+      },
     ],
   },
 ];
