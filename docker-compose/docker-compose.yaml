@@ -1,0 +1,9 @@
+version: '3'
+services:
+  csharp-host-ui: 
+    image: openvasporg/csharp-host-ui:3
+    container_name: csharp-host-ui
+    volumes:
+      - ./env-config.json:/usr/share/nginx/html/env-config.json
+    ports:
+      - 80:80
