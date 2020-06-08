@@ -62,19 +62,17 @@ pipeline {
 
       }
     }
-        stage('Pod Logs') {
-          steps {
-            sh '''
+
+    stage('Pod Logs') {
+      steps {
+        sh '''
             sleep 40
             kubectl --kubeconfig=/kube/dev get pods -n services'''
-          }
-        }
-
       }
     }
-  environment {
-    RepoName = 'openvasp-csharp-ui'
-    ServiceName = 'openvasp-csharp-ui'
-    DockerName = 'csharp-ui'
-    REGISTRY_AUTH = credentials('dockerhub')
+
   }
+  environment {
+    DockerName = 'csharp-ui'
+  }
+}
