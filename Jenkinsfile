@@ -63,24 +63,6 @@ pipeline {
       }
     }
 
-    stage('Kubernetes Deploy') {
-      parallel {
-        stage('Kubernetes Deploy') {
-          steps {
-            sh '''
-            kubectl --kubeconfig=/kube/dev apply -f kubernetes/service.yaml
-            kubectl --kubeconfig=/kube/dev apply -f kubernetes/deployment.yaml'''
-          }
-        }
-        
-    stage('Pod Logs') {
-      steps {
-        sh '''
-            sleep 40
-            kubectl --kubeconfig=/kube/dev get pods -n services'''
-      }
-    }
-
   }
   environment {
     DockerName = 'csharp-ui'
