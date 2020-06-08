@@ -1,8 +1,6 @@
 pipeline {
   agent any
   stages {
-
-
     stage('Docker Build') {
       steps {
         sh '''
@@ -57,8 +55,17 @@ pipeline {
       }
     }
 
+    stage('Kubernetes Deploy') {
+      steps {
+        sh '''
+            kubectl --kubeconfig=/kube/dev apply -f kubernetes/service.yaml
+            kubectl --kubeconfig=/kube/dev apply -f kubernetes/deployment.yaml'''
+      }
+    }
+
   }
   environment {
     DockerName = 'csharp-ui'
+    REGISTRY_AUTH = ''
   }
 }
