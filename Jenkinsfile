@@ -11,7 +11,7 @@ pipeline {
     stage('Docker Build') {
       steps {
         sh '''
-        docker build --tag openvasporg/${DockerName}:0.${BUILD_ID} ./docker/service
+        docker build --tag openvasporg/${DockerName}:0.${BUILD_ID} ./
         docker tag openvasporg/${DockerName}:0.${BUILD_ID} openvasporg/${DockerName}:latest
         docker login -u=$REGISTRY_AUTH_USR -p=$REGISTRY_AUTH_PSW
         docker push openvasporg/${DockerName}:0.${BUILD_ID}
