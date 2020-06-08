@@ -1,13 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('NPM Build') {
-      steps {
-        sh '''
-        npm ci --cache ~/.npm
-        npm run build'''
-      }
-    }
+
 
     stage('Docker Build') {
       steps {
