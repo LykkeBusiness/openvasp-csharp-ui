@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    description: Lykke-Service-Csharp-UI
+  labels:
+    app: csharp-ui
+    tier: Service
+    version: '$version'
+  name: csharp-ui
+  namespace: org-services
+spec:
+  minReadySeconds: 10
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: csharp-ui
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: csharp-ui
+      name: csharp-ui
+    spec:
+      containers:
+      - env:
+        - name: BuildNumber
+          value: '$version'
+        - name: ENV_INFO
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        image: openvasporg/csharp-host-ui:3
+        imagePullPolicy: Always
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - cp /config/env-config.json /usr/share/nginx/html/env-config.json
+        name: csharp-ui
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 40m
+            memory: 128Mi
+        volumeMounts:
+        - mountPath: /config
+          name: workdir
+      initContainers:
+      - args:
+        - wget --output-document=env-config.json http://consul-ui.internal.svc.cluster.local/v1/kv/ui-host-1/settings?raw;
+          cp env-config.json /work-dir
+        command:
+        - /bin/sh
+        - -c
+        image: busybox
+        imagePullPolicy: Always
+        name: install
+        volumeMounts:
+        - mountPath: /work-dir
+          name: workdir
+      volumes:
+      - emptyDir: {}
+        name: workdir
+
+
