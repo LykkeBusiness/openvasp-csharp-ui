@@ -72,8 +72,6 @@ pipeline {
 
       }
     }
-
-  }
   environment {
     RepoName = 'openvasp-csharp-ui'
     ServiceName = 'openvasp-csharp-ui'
