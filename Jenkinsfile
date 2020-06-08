@@ -1,10 +1,17 @@
 pipeline {
   agent any
   stages {
+    stage('NPM Build') {
+      steps {
+        sh '''npm ci --cache ~/.npm
+        npm run build'''
+      }
+    }
+
     stage('Docker Build') {
       steps {
-        sh '''        $REGISTRY_AUTH_USR
-        docker build --tag openvasporg/${DockerName}:0.${BUILD_ID} ./
+        sh '''
+        docker build --tag openvasporg/${DockerName}:0.${BUILD_ID} ./docker/service
         docker tag openvasporg/${DockerName}:0.${BUILD_ID} openvasporg/${DockerName}:latest
         docker login -u=$REGISTRY_AUTH_USR -p=$REGISTRY_AUTH_PSW
         docker push openvasporg/${DockerName}:0.${BUILD_ID}
@@ -56,16 +63,31 @@ pipeline {
     }
 
     stage('Kubernetes Deploy') {
-      steps {
-        sh '''
+      parallel {
+        stage('Kubernetes Deploy') {
+          steps {
+            sh '''
             kubectl --kubeconfig=/kube/dev apply -f kubernetes/service.yaml
             kubectl --kubeconfig=/kube/dev apply -f kubernetes/deployment.yaml'''
+          }
+        }
+
+        stage('Pod Logs') {
+          steps {
+            sh '''
+            sleep 40
+            kubectl --kubeconfig=/kube/dev get pods -n services'''
+          }
+        }
+
       }
     }
 
   }
   environment {
+    RepoName = 'openvasp-csharp-ui'
+    ServiceName = 'openvasp-csharp-ui'
     DockerName = 'csharp-ui'
-    REGISTRY_AUTH = 'credentials(\'dockerhub\')'
+    REGISTRY_AUTH = credentials('dockerhub')
   }
 }
