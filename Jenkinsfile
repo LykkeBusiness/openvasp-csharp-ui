@@ -74,5 +74,6 @@ pipeline {
   }
   environment {
     DockerName = 'csharp-ui'
+    REGISTRY_AUTH = 'credentials(\'dockerhub\')'
   }
 }
