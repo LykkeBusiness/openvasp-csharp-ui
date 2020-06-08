@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'npm run build'
+        sh '''npm ci --cache ~/.npm
+npm run build'''
       }
     }
 
