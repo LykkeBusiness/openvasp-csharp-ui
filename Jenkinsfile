@@ -80,4 +80,3 @@ pipeline {
     DockerName = 'csharp-ui'
     REGISTRY_AUTH = credentials('dockerhub')
   }
-}
