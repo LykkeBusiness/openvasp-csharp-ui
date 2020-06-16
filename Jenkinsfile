@@ -55,6 +55,8 @@ pipeline {
             Image=${DockerName}:0.${BUILD_ID}
             sed -i -e \'s/$dockerImage/\'"$Image"\'/g\' kubernetes/deployment.yaml
             sed -i -e \'s/$version/\'"0.${BUILD_ID}"\'/g\' kubernetes/deployment.yaml 
+            sed -i -e \'s/$dockerImage/\'"$Image"\'/g\' kubernetes/deployment-2.yaml
+            sed -i -e \'s/$version/\'"0.${BUILD_ID}"\'/g\' kubernetes/deployment-2.yaml 
             cat kubernetes/deployment.yaml'''
           }
         }
@@ -68,7 +70,9 @@ pipeline {
           steps {
             sh '''
             kubectl --kubeconfig=/kube/dev apply -f kubernetes/service.yaml
-            kubectl --kubeconfig=/kube/dev apply -f kubernetes/deployment.yaml'''
+            kubectl --kubeconfig=/kube/dev apply -f kubernetes/deployment.yaml
+            kubectl --kubeconfig=/kube/dev apply -f kubernetes/service-2.yaml
+            kubectl --kubeconfig=/kube/dev apply -f kubernetes/deployment-2.yaml'''
           }
         }
 

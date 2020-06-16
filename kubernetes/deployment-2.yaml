@@ -2,12 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    description: Lykke-Service-Csharp-UI
+    description: Lykke-Service-csharp-ui-2
   labels:
-    app: csharp-ui
+    app: csharp-ui-2
     tier: Service
     version: '$version'
-  name: csharp-ui
+  name: csharp-ui-2
   namespace: org-services
 spec:
   minReadySeconds: 10
@@ -16,7 +16,7 @@ spec:
   revisionHistoryLimit: 1
   selector:
     matchLabels:
-      app: csharp-ui
+      app: csharp-ui-2
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -26,8 +26,8 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: csharp-ui
-      name: csharp-ui
+        app: csharp-ui-2
+      name: csharp-ui-2
     spec:
       containers:
       - env:
@@ -47,7 +47,7 @@ spec:
               - /bin/sh
               - -c
               - cp /config/env-config.json /usr/share/nginx/html/env-config.json
-        name: csharp-ui
+        name: csharp-ui-2
         ports:
         - containerPort: 80
           protocol: TCP
@@ -63,7 +63,7 @@ spec:
           name: workdir
       initContainers:
       - args:
-        - wget --output-document=env-config.json http://consul-ui.internal.svc.cluster.local/v1/kv/ui-host-1/settings?raw;cp env-config.json /work-dir
+        - wget --output-document=env-config.json http://consul-ui.internal.svc.cluster.local/v1/kv/ui-host-2/settings?raw;cp env-config.json /work-dir
         command:
         - /bin/sh
         - -c
