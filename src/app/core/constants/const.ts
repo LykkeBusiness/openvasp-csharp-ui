@@ -16,5 +16,7 @@ export const LANGUAGES = {
   German: 'de',
 };
 
+export const MOMENT_LOCALIZED_DATETIME_WITH_SECONDS_FORMAT = 'l LTS';
+export const MOMENT_DATETIME_WITH_SECONDS_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 export const DATETIME_WITH_SECONDS_FORMAT = 'yyyy-MM-dd HH:mm:ss';
 export const DATEONLY_FORMAT = 'yyyy-MM-dd';

@@ -29,6 +29,7 @@ export interface TransactionDetailsModel {
   CreationDateTime: Date;
   Status: string;
   DestinationAddress: string;
+  TransactionDateTime: Date;
   TransactionHash: string;
   SendingAddress: string;
   SessionDeclineCode: string;

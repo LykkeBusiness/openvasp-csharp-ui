@@ -41,7 +41,6 @@ export class TransactionsService {
   }
 
   sessionReply(id: string, model: any) {
-    console.log(model);
     const paramsStr = toParamsString(model);
 
     return this.apiHttp.put<TransactionDetailsModel>(`/api/incomingTransactions/${id}/sessionReply` + paramsStr, null, {

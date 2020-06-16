@@ -58,7 +58,7 @@
             <thead>
               <tr>
                 <th i18n>Transaction Id</th>
-                <th i18n>Date/time</th>
+                <th i18n>Date/time (UTC)</th>
                 <th i18n>Status</th>
                 <th i18n>Originator name</th>
                 <th i18n>Beneficiary name</th>
@@ -72,7 +72,7 @@
               <tr *ngFor="let row of outgoingTransactions; let i = index"
                   class="data-row-{{i}}">
                 <td>{{row.Id}}</td>
-                <td>{{row.CreationDateTime | date : DATETIME_WITH_SECONDS_FORMAT}}</td>
+                <td>{{row.CreationDateTime | date : DATETIME_WITH_SECONDS_FORMAT : 'UTC'}}</td>
                 <td>
                   <ng-container [ngTemplateOutlet]="statusBadge"
                                 [ngTemplateOutletContext]="{$implicit: {row: row}}">
@@ -149,7 +149,7 @@
             <thead>
               <tr>
                 <th i18n>Transaction Id</th>
-                <th i18n>Date/time</th>
+                <th i18n>Date/time (UTC)</th>
                 <th i18n>Status</th>
                 <th i18n>Originator name</th>
                 <th i18n>Beneficiary name</th>
@@ -163,7 +163,7 @@
               <tr *ngFor="let row of incomingTransactions; let i = index"
                   class="data-row-{{i}}">
                 <td>{{row.Id}}</td>
-                <td>{{row.CreationDateTime | date : DATETIME_WITH_SECONDS_FORMAT}}</td>
+                <td>{{row.CreationDateTime | date : DATETIME_WITH_SECONDS_FORMAT : 'UTC'}}</td>
                 <td>
                   <ng-container [ngTemplateOutlet]="statusBadge"
                                 [ngTemplateOutletContext]="{$implicit: {row: row}}">

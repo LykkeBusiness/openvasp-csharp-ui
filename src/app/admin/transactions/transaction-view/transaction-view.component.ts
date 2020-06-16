@@ -14,6 +14,7 @@ import {TransactionStatus} from '../models/OpenVASP.Host.Core.Models/transaction
 import {DictionariesService} from 'src/app/shared/services/dictionaries.service';
 import {DATETIME_WITH_SECONDS_FORMAT, DATEONLY_FORMAT} from 'src/app/core/constants/const';
 import {TransferReplyMessageCode} from '../models/OpenVASP.Messaging.Messages/transfer-reply-message-code.enum';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-transaction-view',
@@ -85,9 +86,12 @@ export class TransactionViewComponent implements OnInit {
       (this.transferReplyModel.Code && this.transferReplyModel.Code !== TransferReplyMessageCode.TransferAccepted)
     );
   }
+
+  today = moment.utc().hour(0).minute(0).second(0);
   transferDispatchModel = {
     SendingAddress: '',
     TransactionHash: '',
+    TransactionDateTime: this.today,
   };
   DATETIME_WITH_SECONDS_FORMAT = DATETIME_WITH_SECONDS_FORMAT;
   DATEONLY_FORMAT = DATEONLY_FORMAT;
@@ -116,6 +120,7 @@ export class TransactionViewComponent implements OnInit {
       if (type === TransactionType.Incoming) {
         this.transactionsService.getIncomingTransaction(this.id).subscribe(
           (res) => {
+            this.handleResponse(res);
             this.transaction = res;
             this.isLoading = false;
           },
@@ -132,6 +137,7 @@ export class TransactionViewComponent implements OnInit {
       } else {
         this.transactionsService.getOutgoingTransaction(this.id).subscribe(
           (res) => {
+            this.handleResponse(res);
             this.transaction = res;
             this.isLoading = false;
           },
@@ -152,6 +158,15 @@ export class TransactionViewComponent implements OnInit {
       title: 'View Transaction',
       subHeaderContent: this.subHeaderTemplate,
     };
+  }
+
+  private handleResponse(res: TransactionDetailsModel) {
+    if (
+      res.TransactionDateTime &&
+      (res.TransactionDateTime.toString().startsWith('01/01/0001') || res.TransactionDateTime.toString().startsWith('0001-01-01'))
+    ) {
+      res.TransactionDateTime = null;
+    }
   }
 
   getCountryNameByIso2Code(iso2Code: string): string {
@@ -185,6 +200,7 @@ export class TransactionViewComponent implements OnInit {
   }
 
   transferDispatch() {
+    // log(JSON.stringify(this.transferDispatchModel, null, 2));
     this.isSaving = true;
 
     this.transactionsService.transferDispatch(this.id, this.transferDispatchModel).subscribe(

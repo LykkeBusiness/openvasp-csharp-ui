@@ -37,6 +37,28 @@ import {HeaderMenuComponent} from './header-menu/header-menu.component';
 import {FileSizePipe} from './pipes/file-size.pipe';
 import {SearchCountryPipe} from './pipes/search-country.pipe';
 
+import {
+  // modules
+  NgxMatDatetimePickerModule,
+  NgxMatDateFormats,
+  NGX_MAT_DATE_FORMATS,
+} from '@angular-material-components/datetime-picker';
+import {NgxMatMomentModule, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular-material-components/moment-adapter';
+import {MOMENT_DATETIME_WITH_SECONDS_FORMAT} from '../core/constants/const';
+
+// If using Moment
+const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
+  parse: {
+    dateInput: MOMENT_DATETIME_WITH_SECONDS_FORMAT,
+  },
+  display: {
+    dateInput: MOMENT_DATETIME_WITH_SECONDS_FORMAT,
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 @NgModule({
   declarations: [
     ErrorMessageComponent,
@@ -83,6 +105,8 @@ import {SearchCountryPipe} from './pipes/search-country.pipe';
     MatTableModule,
     MatToolbarModule,
     MatTooltipModule,
+    NgxMatMomentModule,
+    NgxMatDatetimePickerModule,
   ],
   exports: [
     ErrorMessageComponent,
@@ -126,8 +150,15 @@ import {SearchCountryPipe} from './pipes/search-country.pipe';
     MatToolbarModule,
     MatTooltipModule,
     HeaderMenuComponent,
+    NgxMatMomentModule,
+    NgxMatDatetimePickerModule,
   ],
   entryComponents: [ConfirmationDialogComponent],
-  providers: [{provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}],
+  providers: [
+    // values
+    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
+    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS},
+    {provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
+  ],
 })
 export class SharedModule {}
