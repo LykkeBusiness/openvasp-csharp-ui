@@ -170,7 +170,7 @@ export class TransactionFormComponent implements OnInit {
         null,
         [
           Validators.required,
-          LengthValidator(this.transactionFormValidations.Street.MinLength, this.transactionFormValidations.Street.MaxLength),
+          LengthValidator(this.transactionFormValidations.Building.MinLength, this.transactionFormValidations.Building.MaxLength),
         ],
       ],
       [this.postalAddressFormProps.AddressLine]: [
