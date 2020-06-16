@@ -26,7 +26,7 @@ export class SettingsService {
     let result = '';
 
     if (this._settings && this._settings.BackofficePlatform) {
-      result = window.location.port === '4200' ? this._settings.BackofficePlatform.ApiUrl : this._settings.BackofficePlatform.ApiUrl2;
+      result = window.location.port === '4201' ? this._settings.BackofficePlatform.ApiUrl : this._settings.BackofficePlatform.ApiUrl2;
     }
 
     return result;

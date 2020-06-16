@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "serve-en": "ng serve --configuration=en",
-    "serve-en2": "ng serve --configuration=en --port=4201",
+    "serve-en": "ng serve --configuration=en --port=4201",
+    "serve-en2": "ng serve --configuration=en --port=4202",
     "build": "ng build --configuration=production --localize",
     "test": "ng test",
     "hooks:pre-commit": "npm-run-all prettier:fix-staged",

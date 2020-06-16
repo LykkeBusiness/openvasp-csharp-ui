@@ -1,6 +1,6 @@
 {
   "BackofficePlatform": {
-    "ApiUrl": "http://localhost:5000",
-    "ApiUrl2": "http://localhost:5001"
+    "ApiUrl": "https://open-source-host.openvasp-enterprise.ch",
+    "ApiUrl2": "https://open-source-host-2.openvasp-enterprise.ch"
   }
 }

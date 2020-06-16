@@ -11,7 +11,7 @@ This command uses package-lock.json file with necessary versions.
 ## Development server
 
 To run locally execute command `npm run serve-en`, the available commands are in package.json file inside scripts section.  
-Navigate to `http://localhost:4200/en`. The app will automatically reload if you change any of the source files.  
+Navigate to `http://localhost:4201/en`. The app will automatically reload if you change any of the source files.  
 Pay attention to file `nginx/env-config.json` which contains settings required for application including api url `ApiUrl`. This file is downloading at the moment of application start.
 
 ## Code scaffolding

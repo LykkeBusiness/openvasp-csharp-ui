@@ -10,7 +10,7 @@ import {CountriesService} from 'src/app/shared/services/countries.service';
 import {Country} from 'src/app/shared/models/country.interface';
 import {markFormControlAsTouched} from 'src/app/shared/utils/markFormControlAsTouched';
 import {TranslateService} from 'src/app/shared/services/translate.service';
-import {LengthValidator, AccuracyValidator, IntegerValidator, VaanValidator} from 'src/app/shared/utils/validators';
+import {LengthValidator, AccuracyValidator, VaanValidator} from 'src/app/shared/utils/validators';
 import {ROUTE_ADMIN_ROOT, ROUTE_TRANSACTIONS} from 'src/app/core/constants/routes';
 import {GlobalTemplates} from 'src/app/shared/models/global-templates.interface';
 import {OriginatorType} from '../models/originator-type.enum';
@@ -100,6 +100,10 @@ export class TransactionFormComponent implements OnInit {
       MinLength: 3,
       MaxLength: 200,
     },
+    Building: {
+      MinLength: 1,
+      MaxLength: 50,
+    },
     AddressLine: {
       MinLength: 3,
       MaxLength: 500,
@@ -164,7 +168,10 @@ export class TransactionFormComponent implements OnInit {
       ],
       [this.postalAddressFormProps.Building]: [
         null,
-        [Validators.required, Validators.min(1), Validators.max(constants.INTEGER_MAX_NUMBER), IntegerValidator],
+        [
+          Validators.required,
+          LengthValidator(this.transactionFormValidations.Street.MinLength, this.transactionFormValidations.Street.MaxLength),
+        ],
       ],
       [this.postalAddressFormProps.AddressLine]: [
         null,
@@ -274,7 +281,7 @@ export class TransactionFormComponent implements OnInit {
         OriginatorVaan: '7dfa ce61 524e e3fb 0828 095d',
         OriginatorPostalAddress: {
           Street: 'Street',
-          Building: 1,
+          Building: '1',
           AddressLine: 'AddressLine',
           PostCode: 'PostCode',
           Town: 'Town',

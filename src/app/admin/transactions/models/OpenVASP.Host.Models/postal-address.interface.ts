@@ -1,6 +1,6 @@
 export interface PostalAddress {
   Street: string;
-  Building: number;
+  Building: string;
   AddressLine: string;
   PostCode: string;
   Town: string;

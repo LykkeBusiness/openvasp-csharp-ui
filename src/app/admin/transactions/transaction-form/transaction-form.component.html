@@ -442,22 +442,14 @@
             <mat-label i18n>Building</mat-label>
             <input id="postalAddressFormPropsBuilding"
                    matInput
-                   type="number"
                    [formControlName]="postalAddressFormProps.Building"
-                   min="1"
-                   step="1"
                    required>
             <mat-error>
               <app-error-message [controlName]="postalAddressFormProps.Building"></app-error-message>
               <app-error-message [controlName]="postalAddressFormProps.Building"
-                                 key="min"
-                                 [template]="templates.minNumberError"
-                                 [templateContext]="{$implicit: {min: 1}}"></app-error-message>
-              <app-error-message [controlName]="postalAddressFormProps.Building"
-                                 key="max"
-                                 [template]="templates.maxNumberError"
-                                 [templateContext]="{$implicit: {max: constants.INTEGER_MAX_NUMBER}}">
-              </app-error-message>
+                                 key="length"
+                                 [template]="templates.lengthError"
+                                 [templateContext]="{$implicit: {min: transactionFormValidations.Building.MinLength, max: transactionFormValidations.Building.MaxLength}}"></app-error-message>
             </mat-error>
           </mat-form-field>
         </div>
