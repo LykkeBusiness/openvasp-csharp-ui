@@ -87,7 +87,7 @@ export class TransactionViewComponent implements OnInit {
     );
   }
 
-  today = moment.utc().hour(0).minute(0).second(0);
+  today = moment.utc().hour(0).minute(0).second(0).millisecond(0);
   transferDispatchModel = {
     SendingAddress: '',
     TransactionHash: '',

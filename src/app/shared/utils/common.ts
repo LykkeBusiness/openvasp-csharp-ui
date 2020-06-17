@@ -1,4 +1,5 @@
 import {DISPLAY_ACCURACY} from 'src/app/core/constants/const';
+import * as moment from 'moment';
 
 export function toParamsString(model: any): string {
   if (!model) {
@@ -11,7 +12,18 @@ export function toParamsString(model: any): string {
     if (model.hasOwnProperty(key)) {
       const prop = (model as any)[key];
       // formData.append(key, prop);
-      params.push({key, value: encodeURIComponent(prop.toString())});
+
+      let propStringValue = prop.toString();
+
+      if (prop instanceof Date) {
+        propStringValue = (prop as Date).toISOString();
+      }
+
+      if (moment.isMoment(prop)) {
+        propStringValue = (prop as moment.Moment).toISOString();
+      }
+
+      params.push({key, value: encodeURIComponent(propStringValue)});
     }
   }
 

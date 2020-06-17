@@ -65,8 +65,8 @@ export class TransactionFormComponent implements OnInit {
   };
 
   personFormProps = {
-    IdentificationType: 'IdentificationType',
-    Identifier: 'Identifier',
+    Id: 'Id',
+    Type: 'Type',
     CountryIso2Code: 'CountryIso2Code',
     NonStateIssuer: 'NonStateIssuer',
   };
@@ -296,8 +296,8 @@ export class TransactionFormComponent implements OnInit {
         // OriginatorNaturalPersonIds: [],
         OriginatorNaturalPersonIds: [
           {
-            IdentificationType: NaturalIdentificationType.PassportNumber,
-            Identifier: 'Identifier',
+            Type: NaturalIdentificationType.PassportNumber,
+            Id: 'Identifier',
             CountryIso2Code: 'CH',
             NonStateIssuer: 'NonStateIssuer',
           },
@@ -305,8 +305,8 @@ export class TransactionFormComponent implements OnInit {
         // OriginatorJuridicalPersonIds: [],
         OriginatorJuridicalPersonIds: [
           {
-            IdentificationType: JuridicalIdentificationType.CountryIdentificationNumber,
-            Identifier: 'Identifier',
+            Type: JuridicalIdentificationType.CountryIdentificationNumber,
+            Id: 'Identifier',
             CountryIso2Code: 'CH',
             NonStateIssuer: 'NonStateIssuer',
           },
@@ -331,8 +331,8 @@ export class TransactionFormComponent implements OnInit {
 
   generatePersonFormGroup(): FormGroup {
     return this.fb.group({
-      [this.personFormProps.IdentificationType]: [null],
-      [this.personFormProps.Identifier]: [null],
+      [this.personFormProps.Type]: [null],
+      [this.personFormProps.Id]: [null],
       [this.personFormProps.CountryIso2Code]: [null],
       [this.personFormProps.NonStateIssuer]: [null],
     });
@@ -350,10 +350,8 @@ export class TransactionFormComponent implements OnInit {
     const bicControl = this.transactionForm.get(this.transactionFormProps.OriginatorBic);
 
     const juridicalPersonControls = {
-      [this.personFormProps.IdentificationType]: this.originatorJuridicalPersonIdsFormArray.controls[0].get(
-        this.personFormProps.IdentificationType
-      ),
-      [this.personFormProps.Identifier]: this.originatorJuridicalPersonIdsFormArray.controls[0].get(this.personFormProps.Identifier),
+      [this.personFormProps.Type]: this.originatorJuridicalPersonIdsFormArray.controls[0].get(this.personFormProps.Type),
+      [this.personFormProps.Id]: this.originatorJuridicalPersonIdsFormArray.controls[0].get(this.personFormProps.Id),
       [this.personFormProps.CountryIso2Code]: this.originatorJuridicalPersonIdsFormArray.controls[0].get(
         this.personFormProps.CountryIso2Code
       ),
@@ -363,10 +361,8 @@ export class TransactionFormComponent implements OnInit {
     };
 
     const naturalPersonControls = {
-      [this.personFormProps.IdentificationType]: this.originatorNaturalPersonIdsFormArray.controls[0].get(
-        this.personFormProps.IdentificationType
-      ),
-      [this.personFormProps.Identifier]: this.originatorNaturalPersonIdsFormArray.controls[0].get(this.personFormProps.Identifier),
+      [this.personFormProps.Type]: this.originatorNaturalPersonIdsFormArray.controls[0].get(this.personFormProps.Type),
+      [this.personFormProps.Id]: this.originatorNaturalPersonIdsFormArray.controls[0].get(this.personFormProps.Id),
       [this.personFormProps.CountryIso2Code]: this.originatorNaturalPersonIdsFormArray.controls[0].get(
         this.personFormProps.CountryIso2Code
       ),
@@ -388,8 +384,8 @@ export class TransactionFormComponent implements OnInit {
         this.clearNaturalPersonValidators(naturalPersonControls, placeOfBirthControls);
         break;
       case OriginatorType.JuridicalPerson:
-        juridicalPersonControls[this.personFormProps.IdentificationType].setValidators([Validators.required]);
-        juridicalPersonControls[this.personFormProps.Identifier].setValidators([Validators.required]);
+        juridicalPersonControls[this.personFormProps.Type].setValidators([Validators.required]);
+        juridicalPersonControls[this.personFormProps.Id].setValidators([Validators.required]);
         juridicalPersonControls[this.personFormProps.CountryIso2Code].setValidators([Validators.required]);
         juridicalPersonControls[this.personFormProps.NonStateIssuer].setValidators([Validators.required]);
 
@@ -399,8 +395,8 @@ export class TransactionFormComponent implements OnInit {
         this.clearNaturalPersonValidators(naturalPersonControls, placeOfBirthControls);
         break;
       case OriginatorType.NaturalPerson:
-        naturalPersonControls[this.personFormProps.IdentificationType].setValidators([Validators.required]);
-        naturalPersonControls[this.personFormProps.Identifier].setValidators([Validators.required]);
+        naturalPersonControls[this.personFormProps.Type].setValidators([Validators.required]);
+        naturalPersonControls[this.personFormProps.Id].setValidators([Validators.required]);
         naturalPersonControls[this.personFormProps.CountryIso2Code].setValidators([Validators.required]);
         naturalPersonControls[this.personFormProps.NonStateIssuer].setValidators([Validators.required]);
 
@@ -427,16 +423,16 @@ export class TransactionFormComponent implements OnInit {
   }
 
   private clearJuridicalPersonValidators(juridicalPersonControls: {[x: string]: AbstractControl}) {
-    juridicalPersonControls[this.personFormProps.IdentificationType].setValidators(null);
-    juridicalPersonControls[this.personFormProps.Identifier].setValidators(null);
+    juridicalPersonControls[this.personFormProps.Type].setValidators(null);
+    juridicalPersonControls[this.personFormProps.Id].setValidators(null);
     juridicalPersonControls[this.personFormProps.CountryIso2Code].setValidators(null);
     juridicalPersonControls[this.personFormProps.NonStateIssuer].setValidators(null);
     this.updateValidityOfJuridicalPerson(juridicalPersonControls);
   }
 
   private updateValidityOfJuridicalPerson(juridicalPersonControls: {[x: string]: AbstractControl}) {
-    juridicalPersonControls[this.personFormProps.IdentificationType].updateValueAndValidity();
-    juridicalPersonControls[this.personFormProps.Identifier].updateValueAndValidity();
+    juridicalPersonControls[this.personFormProps.Type].updateValueAndValidity();
+    juridicalPersonControls[this.personFormProps.Id].updateValueAndValidity();
     juridicalPersonControls[this.personFormProps.CountryIso2Code].updateValueAndValidity();
     juridicalPersonControls[this.personFormProps.NonStateIssuer].updateValueAndValidity();
   }
@@ -445,8 +441,8 @@ export class TransactionFormComponent implements OnInit {
     naturalPersonControls: {[x: string]: AbstractControl},
     placeOfBirthControls: {[x: string]: AbstractControl}
   ) {
-    naturalPersonControls[this.personFormProps.IdentificationType].setValidators(null);
-    naturalPersonControls[this.personFormProps.Identifier].setValidators(null);
+    naturalPersonControls[this.personFormProps.Type].setValidators(null);
+    naturalPersonControls[this.personFormProps.Id].setValidators(null);
     naturalPersonControls[this.personFormProps.CountryIso2Code].setValidators(null);
     naturalPersonControls[this.personFormProps.NonStateIssuer].setValidators(null);
 
@@ -461,8 +457,8 @@ export class TransactionFormComponent implements OnInit {
     naturalPersonControls: {[x: string]: AbstractControl},
     placeOfBirthControls: {[x: string]: AbstractControl}
   ) {
-    naturalPersonControls[this.personFormProps.IdentificationType].updateValueAndValidity();
-    naturalPersonControls[this.personFormProps.Identifier].updateValueAndValidity();
+    naturalPersonControls[this.personFormProps.Type].updateValueAndValidity();
+    naturalPersonControls[this.personFormProps.Id].updateValueAndValidity();
     naturalPersonControls[this.personFormProps.CountryIso2Code].updateValueAndValidity();
     naturalPersonControls[this.personFormProps.NonStateIssuer].updateValueAndValidity();
 

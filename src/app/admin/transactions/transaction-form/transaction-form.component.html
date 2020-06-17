@@ -173,13 +173,13 @@
               <mat-form-field appearance="outline"
                               class="width-100">
                 <mat-label i18n>Identification Type</mat-label>
-                <mat-select [formControlName]="personFormProps.IdentificationType"
+                <mat-select [formControlName]="personFormProps.Type"
                             required>
                   <mat-option *ngFor="let type of juridicalIdentificationTypeValues"
                               [value]="type.Value">{{type.DisplayName}}</mat-option>
                 </mat-select>
                 <mat-error>
-                  <app-error-message [controlName]="personFormProps.IdentificationType"></app-error-message>
+                  <app-error-message [controlName]="personFormProps.Type"></app-error-message>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -188,10 +188,10 @@
                               class="width-100">
                 <mat-label i18n>Identifier</mat-label>
                 <input matInput
-                       [formControlName]="personFormProps.Identifier"
+                       [formControlName]="personFormProps.Id"
                        required>
                 <mat-error>
-                  <app-error-message [controlName]="personFormProps.Identifier"></app-error-message>
+                  <app-error-message [controlName]="personFormProps.Id"></app-error-message>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -262,13 +262,13 @@
                 <mat-form-field appearance="outline"
                                 class="width-100">
                   <mat-label i18n>Identification Type</mat-label>
-                  <mat-select [formControlName]="personFormProps.IdentificationType"
+                  <mat-select [formControlName]="personFormProps.Type"
                               required>
                     <mat-option *ngFor="let type of naturalIdentificationTypeValues"
                                 [value]="type.Value">{{type.DisplayName}}</mat-option>
                   </mat-select>
                   <mat-error>
-                    <app-error-message [controlName]="personFormProps.IdentificationType"></app-error-message>
+                    <app-error-message [controlName]="personFormProps.Type"></app-error-message>
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -277,10 +277,10 @@
                                 class="width-100">
                   <mat-label i18n>Identifier</mat-label>
                   <input matInput
-                         [formControlName]="personFormProps.Identifier"
+                         [formControlName]="personFormProps.Id"
                          required>
                   <mat-error>
-                    <app-error-message [controlName]="personFormProps.Identifier"></app-error-message>
+                    <app-error-message [controlName]="personFormProps.Id"></app-error-message>
                   </mat-error>
                 </mat-form-field>
               </div>
